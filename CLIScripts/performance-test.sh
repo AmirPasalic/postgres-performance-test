@@ -1,3 +1,3 @@
 #!/bin/bash
 
-## TBD
+docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh

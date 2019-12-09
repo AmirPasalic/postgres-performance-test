@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd DatabaseScripts
+cd DatabaseScripts/Setup
 echo 'Creating the Database...'
 psql -f CreateDatabase.sql 
 echo 'Database created.'
