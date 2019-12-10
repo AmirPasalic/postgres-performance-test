@@ -8,6 +8,7 @@ services:
             dockerfile: postgresdb.dockerfile
         volumes:
             - /var/db/data/postgresql:/var/lib/postgresql
+            - ~/PerformanceTestResults/:/DatabaseScripts/PerformanceTestResults/
         environment:
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=admin
