@@ -10,6 +10,6 @@ EXPLAIN ANALYSE
 SELECT *
 FROM jsonb_cars
 WHERE 
-	(data ->> 'model')::VARCHAR AS model = 'X1' OR
-	(data ->> 'model')::VARCHAR AS model = 'X3' OR
-	(data ->> 'model')::VARCHAR AS model = 'X5';
+	(data ->> 'model')::VARCHAR = 'X1' OR
+	(data ->> 'model')::VARCHAR = 'X3' OR
+	(data ->> 'model')::VARCHAR = 'X5';
