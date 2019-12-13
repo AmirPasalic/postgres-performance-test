@@ -1,6 +1,8 @@
 #!/bin/bash
 
+mkdir /DatabaseScripts/PerformanceTestResults
 logFile="/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt"
+touch $logFile
 truncate -s 0 logFile 
 
 function execute_query {
