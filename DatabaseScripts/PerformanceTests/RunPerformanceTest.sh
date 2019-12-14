@@ -1,30 +1,29 @@
 #!/bin/bash
 
+queryRunCounter=$1
+withIndexes=$2
+
 mkdir /DatabaseScripts/PerformanceTestResults
 logFile="/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt"
 touch $logFile
 truncate -s 0 logFile 
 
-function execute_query {
-    cat $1 >> $logFile
-    echo "" >> $logFile
-    psql -d "CarReservationsDb" -f $1 >> $logFile
-    echo "" >> $logFile
+function run_queries {
+    for i in $(seq 1 $1); do
+        bash RunQueries $logFile
+    done
 }
 
-cd DatabaseScripts/PerformanceTests/Queries
-echo 'Running queries...'
-echo "" >> $logFile
+bash run_queries $queryRunCounter
 
-execute_query Query1.sql
-execute_query Query1JSONB.sql
-
-execute_query Query2.sql
-execute_query Query2JSONB.sql
-
-execute_query Query3.sql
-execute_query Query3JSONB.sql
-
-echo 'Running quries finished!'
+if [$withIndexes = "withIndex"]
+then
+    echo "Applying Indexes..." >> $logFile
+    bash ApplyIndexes.sh
+    echo "Applying Indexes Finished!" >> $logFile
+    echo "Rerun queries after Indexes are applied..." >> $logFile
+    bash run_queries $queryRunCounter
+fi
+  
 echo 'Full Log of Performance test:'
 cat $logFile;
