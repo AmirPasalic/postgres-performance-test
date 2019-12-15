@@ -4,7 +4,6 @@
 -- Example 2.
 -- Select all from Cars table where the model is 'X1'
 -- or model is X3 or model is X5.
-
 -- Standard SQL
 
 EXPLAIN ANALYSE  

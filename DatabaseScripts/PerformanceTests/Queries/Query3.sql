@@ -8,4 +8,4 @@
 EXPLAIN ANALYSE  
 SELECT *
 FROM cars 
-INNER JOIN car_reservations AS cr on car.id = cr.car_id;
+INNER JOIN car_reservations AS cr on cars.id = cr.car_id;
