@@ -2,7 +2,7 @@
 
 DO $$ 
 DECLARE
-   milionEntries INT := 1000000;
+   milionEntries INT := 1000; -- change to 1000000
    tree_milionEntries INT := milionEntries * 3;
 BEGIN 
 	-- Insert into cars Table - 1 Milion BMWs

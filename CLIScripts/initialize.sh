@@ -1,14 +1,55 @@
 #!/bin/bash
 
-#Start the db
-docker-compose -f "../docker-compose-postgres.yml" up -d --build
-sleep 1s
-docker exec -it postgres-db bash ./DatabaseScripts/CreateDatabase.sh
+#Exit when any command fails
+set -e
 
-#Copy CreateDatabase.sql and execute it in the postgres docker container
-# Run query on sql schema and show result
-# Run query on JSONB schema and show result
-# Apply indexes 
-# Run query on sql schema and show result
-# Run query on JSONB schema and show result
-# Output the result in output summary file
+#Show help for the command
+function help {
+    #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
+    tab="    " 
+    double_tab="        "
+    
+    echo ""
+    echo "NAME"
+    echo "$tab initialize.sh"
+    echo ""
+    echo "DESCRIPTION"
+    echo "$tab initialize.sh help page"
+    echo "$tab This command creates a test database called CarReservationsDb and seeds test"
+    echo "$tab data to that database."
+    echo "$tab It will create standard pure sql schema tables and jsonb tables with structure: ."
+    echo "$tab Id as uuid and data as JOSNB."
+    echo ""
+    echo "$tab This database with its tables and data is used for running the performance test."
+    echo "$tab More infos on that you can find by visiting the help page of the performance-test.sh."
+    echo "$tab Example performance-test.sh --help or performance-test.sh -h"
+    echo ""
+    echo "$tab This database can be removed with all its data with the cleanup.sh command."
+    echo "$tab More infos on that you can find by visiting the help page of the cleanup.sh."
+    echo "$tab Example: cleanup.sh --help or cleanup.sh -h"
+    echo ""
+    echo "$tab Options:"
+    echo ""
+    echo "$tab -rn, --recordNumber"
+    echo "$double_tab Record number that should be used for the Initialization of the CarReservationsDb database." 
+    echo ""
+}
+
+#Handle input arguments for the script
+function handle_arguments {
+        case $1 in 
+            -h | --help )
+                help
+                exit 0;;                 
+        esac
+}
+
+#Run main function as the main script flow
+function main {
+    handle_arguments $@
+    docker-compose -f "../docker-compose-postgres.yml" up -d --build
+    sleep 1s
+    docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh
+}
+
+main $@
