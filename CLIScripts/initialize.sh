@@ -49,7 +49,7 @@ function main {
     handle_arguments $@
     docker-compose -f "../docker-compose-postgres.yml" up -d --build
     sleep 1s
-    docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh
+    docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh $@
 }
 
 main $@
