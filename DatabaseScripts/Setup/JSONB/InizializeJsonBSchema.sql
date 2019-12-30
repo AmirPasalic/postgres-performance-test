@@ -1,6 +1,5 @@
 -- Initialuze the JSONB schema
 
-\connect CarReservationsDb;
 
 -- Create cars Table
 CREATE TABLE jsonb_cars (

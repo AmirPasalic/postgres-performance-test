@@ -40,37 +40,70 @@ function create_database {
 }
 
 function create_and_seed_sql_schema {
-    echo 'Setting up pure SQL Schema.....'
+    echo "Setting up pure SQL Schema....."
     cd Standard
     psql -f InitializeSchema.sql
-    echo 'Initialize Database table schema for: cars, customers and reservations finished.'
+    echo "Initialize Database table schema for: cars, customers and reservations finished."
     
     # Create function
-    echo 'Creating seed_data function...'
-    psql -d "CarReservationsDb" -f SeedData.sql
+    echo "Creating seed_data function..."
+    psql -d "$database" -f SeedData.sql
     
     # call seed_data function
     echo "Seeding data..."
-    psql -d "CarReservationsDb" -c "SELECT seed_data($numberOfRecords)" -f SeedData.sql
+    psql -d "$database" -c "SELECT seed_data($numberOfRecords)" -f SeedData.sql
 
-    echo 'Seeding SQL schema data finished.'
+    echo "Seeding SQL schema data finished."
 }
 
 function create_and_seed_jsonb_schema {
-    echo 'Setting up JSONB Schema.....'
+    echo "Setting up JSONB Schema....."
     cd ../JSONB
-    psql -f InizializeJsonBSchema.sql
-    echo 'Create tables with JSONB table schema for: jsonb_cars, jsonb_customers and jsonb_car_reservations finished.'
-    psql -f SeedJsonBData.sql
-    echo 'Seeding JSONB schema data finished.'
+    psql -d "$database" -f InizializeJsonBSchema.sql
+    echo "Create tables with JSONB table schema for: jsonb_cars, jsonb_customers and jsonb_car_reservations finished."
+    psql -d "$database" -f SeedJsonBData.sql
+    echo "Seeding JSONB schema data finished."
+}
+
+# Creates summary log file where infromation about created tables can be viewed
+function create_summary_log_file {
+    cd /DatabaseScripts
+    mkdir SetupSummary
+    summarylogFile="/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt"
+    touch $summarylogFile
+    truncate -s 0 $summarylogFile 
+
+    customersCount=$numberOfRecords
+    let carsCount=$numberOfRecords*3
+    let carReservationsCount=carsCount*4
+
+    echo "Database Information:" >> $summarylogFile
+    echo "Database Name: '$database'" >> $summarylogFile
+    echo "" >> $summarylogFile
+
+    echo "Table Information: '$database' database contains following tables: " >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\dt" -d "$database" >> $summarylogFile
+    
+    echo "" >> $summarylogFile
+    echo "Rows inserted per table:" >> $summarylogFile
+    echo "" >> $summarylogFile
+    echo "cars: $carsCount" >> $summarylogFile
+    echo "customers: $customersCount" >> $summarylogFile
+    echo "car_reservations: $carReservationsCount" >> $summarylogFile
+    echo "jsonb_cars: $carsCount" >> $summarylogFile
+    echo "jsonb_customers: $customersCount" >> $summarylogFile
+    echo "jsonb_car_reservations: $carReservationsCount" >> $summarylogFile
 }
 
 #Run main function as the main script flow
 function main {
     process_input_parameters $@
+    database="CarReservationsDb"
     create_database
     create_and_seed_sql_schema
     create_and_seed_jsonb_schema
+    create_summary_log_file
 }
 
 main $@
