@@ -49,7 +49,7 @@ function create_and_seed_sql_schema {
     echo "Creating seed_data function..."
     psql -d "$database" -f SeedData.sql
     
-    # call seed_data function
+    # Call seed_data function
     echo "Seeding data..."
     psql -d "$database" -c "SELECT seed_data($numberOfRecords)" -f SeedData.sql
 

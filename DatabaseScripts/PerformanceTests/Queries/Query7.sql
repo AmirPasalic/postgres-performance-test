@@ -1,10 +1,9 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Example 5.
--- Select all Cars where brand is BMW and model is 120d
+-- Example 7.
+-- TBD
 -- Standard SQL
 
 EXPLAIN ANALYSE  
-SELECT * FROM Cars
-WHERE brand = 'BMW' AND model = '120d'
+-- sql here

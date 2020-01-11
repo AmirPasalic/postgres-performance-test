@@ -2,6 +2,7 @@
 DECLARE
    entriesCount ALIAS FOR $1; -- change to 1000000
    trippleEntriesCount INT := entriesCount * 3;
+   trippleEntriesCounter INT := trippleEntriesCount + 1;
 BEGIN 
 	-- Insert into cars Table - BMWs
 	INSERT INTO cars (brand, model, company_name)
@@ -42,7 +43,7 @@ BEGIN
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
 			i, -- carId
-			trippleEntriesCount - i, -- customerId
+			trippleEntriesCounter / 3, -- customerId
 			'2020-01-21', -- startDate
 			'2020-01-28' -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
@@ -51,7 +52,7 @@ BEGIN
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
 			i, -- carId
-			trippleEntriesCount - i, -- customerId
+			trippleEntriesCounter / 3, -- customerId
 			'2020-02-01', -- startDate
 			'2020-02-10' -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
@@ -60,7 +61,7 @@ BEGIN
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
 			i, -- carId
-			trippleEntriesCount - i, -- customerId
+			trippleEntriesCounter / 3, -- customerId
 			'2020-02-10', -- startDate
 			'2020-02-17' -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
@@ -69,13 +70,10 @@ BEGIN
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
 			i, -- carId
-			trippleEntriesCount - i, -- customerId
+			trippleEntriesCounter / 3, -- customerId
 			'2020-02-18', -- startDate
 			'2020-02-25' -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
-
-	--RETURN entriesCount;
-
 END;
 $$ LANGUAGE plpgsql;
 
