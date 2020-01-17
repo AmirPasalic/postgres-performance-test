@@ -34,6 +34,22 @@ function main {
     execute_query Query3JSONB.sql
 
     bash "$insertTextSeparatorScript" "$logFile"
+    execute_query Query4.sql
+    execute_query Query4JSONB.sql
+
+    bash "$insertTextSeparatorScript" "$logFile"
+    execute_query Query5.sql
+    execute_query Query5JSONB.sql
+
+    bash "$insertTextSeparatorScript" "$logFile"
+    execute_query Query6.sql
+    execute_query Query6JSONB.sql
+
+    bash "$insertTextSeparatorScript" "$logFile"
+    execute_query Query7.sql
+    execute_query Query7JSONB.sql
+
+    bash "$insertTextSeparatorScript" "$logFile"
     echo 'Running quries finished!'
 }
 
