@@ -60,7 +60,6 @@ function apply_indexes {
 function main {
     #default value of queryRunCounter is 1.
     queryRunCounter=1
-
     #default value of withIndexes is "".
     withIndexes=""
     

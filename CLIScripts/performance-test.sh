@@ -53,8 +53,9 @@ function main {
     # run queries on schemas
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh "$@"
 
+    mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults/
     # save performance test results to host machine
-    docker exec -it postgres-db cat "/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt" > ~/PerformanceTestResults/PerformanceTestLog.txt
+    docker exec -it postgres-db cat "/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt" > ~/PostgresPerformanceProject/PerformanceTestResults/PerformanceTestLog.txt
 }
 
 main "$@"

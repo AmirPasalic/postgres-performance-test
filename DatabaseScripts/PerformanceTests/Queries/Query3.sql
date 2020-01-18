@@ -1,11 +1,10 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Example 3.
--- Select all Cars where a Reservation exists
+-- Query 3
+-- Select all Cars where brand is BMW and model is 120d
 -- Standard SQL
 
 EXPLAIN ANALYSE  
-SELECT *
-FROM cars 
-INNER JOIN car_reservations AS cr on cars.id = cr.car_id;
+SELECT * FROM Cars
+WHERE brand = 'BMW' AND model = '120d'

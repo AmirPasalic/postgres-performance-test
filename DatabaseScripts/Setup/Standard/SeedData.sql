@@ -2,8 +2,13 @@
 DECLARE
    entriesCount ALIAS FOR $1; -- change to 1000000
    trippleEntriesCount INT := entriesCount * 3;
+   day1InTheFuture DATE := (SELECT 'tomorrow'::DATE tomorrow);
+   days7InTheFuture DATE := (SELECT (SELECT NOW() + INTERVAL '7 DAY')::DATE);
+   days14InTheFuture DATE := (SELECT (SELECT NOW() + INTERVAL '14 DAY')::DATE);
+   days21InTheFuture DATE := (SELECT (SELECT NOW() + INTERVAL '14 DAY')::DATE);
+   days28InTheFuture DATE := (SELECT (SELECT NOW() + INTERVAL '14 DAY')::DATE);
 BEGIN 
-	-- Insert into cars Table - 1 Milion BMWs
+	-- Insert into cars Table - BMWs
 	INSERT INTO cars (brand, model, company_name)
 		SELECT 'BMW',
 			('{"120d", "X1", "X3", "X5", "X6"}'::TEXT[])
@@ -11,7 +16,7 @@ BEGIN
 			'Bayerische Motoren Werke AG'
 			FROM generate_series(1, entriesCount) as i;
 
-	-- Insert into cars Table - 1 Milion VWs
+	-- Insert into cars Table - VWs
 	INSERT INTO cars (brand, model, company_name)
 		SELECT 'VW',
 			('{"Jetta", "Tiguan", "Touareg", "Passat", "Golf"}'::TEXT[])
@@ -19,7 +24,7 @@ BEGIN
 			'Volkswagen AG'
 			FROM generate_series(1, entriesCount) as i;
 
-	-- Insert into cars Table - 1 Milion Mercedeses
+	-- Insert into cars Table - Mercedeses
 	INSERT INTO cars (brand, model, company_name)
 		SELECT 'Mercedes-Benz',
 			('{"GLA", "B180", "CLS", "GLC", "GLE"}'::TEXT[])
@@ -27,7 +32,7 @@ BEGIN
 			'Daimler AG'
 			FROM generate_series(1, entriesCount) as i;
 
-	-- Insert 1 Milion Customers
+	-- Insert Customers
 	INSERT INTO customers (first_name, last_name, customer_address)
 		SELECT 
 			('{"Adam", "John", "Max", "Joe", "Anthony"}'::TEXT[])
@@ -38,45 +43,46 @@ BEGIN
 				[i % 5 + 1]
 			FROM generate_series(1, entriesCount) as i;
 
-	-- Insert 3 Milion Car Reservations
+	-- Insert Car Reservations
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
-			i, -- carId
-			3000000 - i, -- customerId
-			'2020-01-21', -- startDate
-			'2020-01-28' -- endDate
+			(SELECT trunc(random() * 3000 + 1) WHERE i = i), -- carId
+			-- randomly generate carId from 1 - 3000
+			(SELECT trunc(random() * 1000 + 1) WHERE i = i), -- customerId
+			-- the WHERE i = i is to fake a condition.
+			-- PostgreSQL can treat such a scalar subquery, which doesn’t have any outer dependences as a stable one
+			-- so it will be evaluated only once. And random would generate always the same number
+			day1InTheFuture, -- startDate
+			days7InTheFuture -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
 
 	-- Insert 3 Milion Car Reservations
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
-			i, -- carId
-			3000000 - i, -- customerId
-			'2020-02-01', -- startDate
-			'2020-02-10' -- endDate
+			(SELECT trunc(random() * 3000 + 1) WHERE i = i), -- carId
+			(SELECT trunc(random() * 1000 + 1) WHERE i = i), -- customerId
+			days7InTheFuture, -- startDate
+			days14InTheFuture -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
 
 	-- Insert 3 Milion Car Reservations
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
-			i, -- carId
-			3000000 - i, -- customerId
-			'2020-02-10', -- startDate
-			'2020-02-17' -- endDate
+			(SELECT trunc(random() * 3000 + 1) WHERE i = i), -- carId
+			(SELECT trunc(random() * 1000 + 1) WHERE i = i), -- customerId
+			days14InTheFuture, -- startDate
+			days21InTheFuture -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
 
 	-- Insert 3 Milion Car Reservations
 	INSERT INTO car_reservations (car_id, customer_id, start_date, end_date)
 		SELECT 
-			i, -- carId
-			3000000 - i, -- customerId
-			'2020-02-18', -- startDate
-			'2020-02-25' -- endDate
+			(SELECT trunc(random() * 3000 + 1) WHERE i = i), -- carId
+			(SELECT trunc(random() * 1000 + 1) WHERE i = i), -- customerId
+			days21InTheFuture, -- startDate
+			days28InTheFuture -- endDate
 			FROM generate_series(1, trippleEntriesCount) as i;
 
-	--RETURN entriesCount;
-
+			-- select trunc(random() * 1000 + 1)
 END;
 $$ LANGUAGE plpgsql;
-
-

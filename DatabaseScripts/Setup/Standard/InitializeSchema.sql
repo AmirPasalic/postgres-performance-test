@@ -12,7 +12,7 @@ CREATE TABLE car_reservations (
   id BIGSERIAL PRIMARY KEY,
   car_id INT,
   customer_id INT,
-  start_date VARCHAR(50),
+  start_date DATE,
   end_date DATE
 );
 

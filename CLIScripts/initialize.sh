@@ -49,7 +49,13 @@ function main {
     handle_arguments $@
     docker-compose -f "../docker-compose-postgres.yml" up -d --build
     sleep 1s
+
+    # create database and seed data
     docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh $@
+
+    mkdir -p ~/PostgresPerformanceProject/DatabaseSetup/
+    # save Database setup logs to host machine
+    docker exec -it postgres-db cat "/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt" > ~/PostgresPerformanceProject/DatabaseSetup/PerformanceTestLog.txt
 }
 
 main $@

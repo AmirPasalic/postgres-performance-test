@@ -1,5 +1,3 @@
-\connect CarReservationsDb;
-
 CREATE TYPE jsonb_cars_type AS (
     brand VARCHAR(50),
     model VARCHAR(50),
