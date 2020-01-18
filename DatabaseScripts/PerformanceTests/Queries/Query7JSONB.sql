@@ -1,7 +1,7 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Example 7.
+-- Query 7
 -- Select all car_reservatins with customer information 
 -- which has specific customer id. For example the customer.id = 5
 -- JSONB

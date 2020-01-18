@@ -1,11 +1,12 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Example 4.
+-- Query 5.
 -- Select customer names, cars brand and model and car_reservations start_date 
 -- where a car_reservation for that car exists
 -- JSONB
 
+EXPLAIN ANALYSE 
 SELECT 
   (tmp_jsonb_car_reservations.id)::INTEGER AS car_reservations_id,
   (ca.data ->> 'brand')::VARCHAR AS car_brand, 

@@ -3,7 +3,7 @@
 ## About the Project
 
 The scope of this project is to setup a simple test database and run some queries to measure their performance.
-The goal is to test simple PostgreSQL SQL relational table based schema in comparison to JSONB based schema
+The goal is to test simple PostgreSQL sql relational table based schema in comparison to JSONB based schema
 and how same queries(queries which aim to retrieve same data regardless of table structure) will perform based on the table structures.
 
 ## Motivation

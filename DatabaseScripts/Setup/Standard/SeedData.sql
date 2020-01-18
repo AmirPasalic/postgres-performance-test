@@ -86,5 +86,3 @@ BEGIN
 			-- select trunc(random() * 1000 + 1)
 END;
 $$ LANGUAGE plpgsql;
-
-

@@ -1,7 +1,7 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Example 4.
+-- Query 5
 -- Select customer names, cars brand and model and car_reservations start_date 
 -- where a car_reservation for that car exists
 -- Standard SQL
