@@ -120,8 +120,3 @@ More info's on this command can be found in the help page of the performance-tes
 
 Example: `performance-test.sh --help or performance-test.sh -h`
 
-
-## License
-
-TBD.
-
