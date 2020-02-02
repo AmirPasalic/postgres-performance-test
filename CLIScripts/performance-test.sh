@@ -3,10 +3,13 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Show help for the command
 function help {
-    tab="    " #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    double_tab="        "
+    readonly tab="    " #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
+    readonly double_tab="        "
     echo ""
     echo "NAME"
     echo "$tab performance-test.sh"
@@ -39,11 +42,12 @@ function help {
 
 #Handle input arguments for the script
 function handle_arguments {
-        case $1 in 
-            -h | --help )
-                help
-                exit 0;;                 
-        esac
+    argument1=${1-default}
+    case argument1 in 
+        -h | --help )
+            help
+            exit 0;;                 
+    esac
 }
 
 #Run main function as the main script flow
@@ -53,9 +57,11 @@ function main {
     # run queries on schemas
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh "$@"
 
+    rm -r ~/PostgresPerformanceProject/PerformanceTestResults
     mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults/
-    # save performance test results to host machine
-    docker exec -it postgres-db cat "/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt" > ~/PostgresPerformanceProject/PerformanceTestResults/PerformanceTestLog.txt
+    
+    # copy performance test results to host machine
+    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults ~/PostgresPerformanceProject/PerformanceTestResults
 }
 
 main "$@"

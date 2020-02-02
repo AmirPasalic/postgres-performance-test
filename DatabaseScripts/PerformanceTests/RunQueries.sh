@@ -3,54 +3,72 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Executs sql queries agains the test database
-function execute_query {
-    cat $1 >> $logFile
-    echo "" >> $logFile
-    psql -d "CarReservationsDb" -f $1 >> $logFile
-    echo "" >> $logFile
+function execute_query {    
+    query=$1
+    shortLog=$2;
+    longLog=$3;
+
+    #TODO:
+    # this is the one with just execution time
+    #psql -d "CarReservationsDb" -f "$query" >> "shortLog"
+
+    # Execute with the long log(EXPLAIN ANALYZE)
+    psql -d "CarReservationsDb" -f "$query" >> "$longLog"
+
+    # add empy lies to the log file
+    #echo "" >> $shortLog
+    echo "" >> "$longLog"
+
+    #bash "$insertTextSeparatorScript" "$shortSummaryLog"
+    bash "$insertTextSeparatorScript" "$longLog"
+}
+
+function run_qeury {
+    #example: queryName = Query1
+    query=$1
+    schemaName=$2
+
+    if [ "$schemaName" = "sql" ]
+    then
+        #example: sqlQuery = Query1.sql
+        queryName="${query}.sql"
+    else
+        #example: jsonbQuery = Query1JSONB.sql
+        queryName="${queryName}JSONB.sql"
+    fi
+
+    #example: shortSummaryLog = queryName + ShortLog.txt = Query1ShortLog.txt
+    shortSummaryLogFileName="${queryName}ShortLog.txt"
+    
+    #example: fullSummaryLog = queryName + FullLog.txt = Query2FullLog.txt
+    fullSummaryLogFileName="${queryName}FullLog.txt"
+
+    shortLog="$logsPath/$shortSummaryLogFileName" #TODO here is the problem.
+    longLog="$logsPath/$fullSummaryLogFileName"
+
+    execute_query "$queryName" "$shortLog" "$longLog"
 }
 
 #Run main function as the main script flow
 function main {    
-    logFile=$1
-    insertTextSeparatorScript="/DatabaseScripts/PerformanceTests/InsertTextSeparator.sh"
+    logsPath=$1
+    schema=$2
+    readonly insertTextSeparatorScript="/DatabaseScripts/PerformanceTests/InsertTextSeparator.sh"
     
     cd /DatabaseScripts/PerformanceTests/Queries
-    echo 'Running queries, this could take a while...'
-    echo $logFile
-    echo "" >> $logFile
 
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query1.sql
-    execute_query Query1JSONB.sql
-
-    bash "$insertTextSeparatorScript" $logFile
-    execute_query Query2.sql
-    execute_query Query2JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query3.sql
-    execute_query Query3JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query4.sql
-    execute_query Query4JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query5.sql
-    execute_query Query5JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query6.sql
-    execute_query Query6JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    execute_query Query7.sql
-    execute_query Query7JSONB.sql
-
-    bash "$insertTextSeparatorScript" "$logFile"
-    echo 'Running quries finished!'
+    # TODO: refactor this to loop
+    run_qeury "Query1" "$schema"
+    run_qeury "Query2" "$schema"
+    run_qeury "Query3" "$schema"
+    run_qeury "Query4" "$schema"
+    run_qeury "Query5" "$schema"
+    run_qeury "Query6" "$schema"
+    run_qeury "Query7" "$schema"
 }
 
 main $@

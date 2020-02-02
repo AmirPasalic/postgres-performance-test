@@ -15,7 +15,7 @@ The motivation was to test in PostgreSQL db how standard sql schema compares to 
 Seeing multiple project going away from standard relational table design for multiple reasons I wanted to test the impact
 on some standard or often used queries.
 
-*As always my standard motivation behind this project is as always to learn something and try things out.* 
+*As always my standard motivation behind this and any other project is as always to learn something and try things out.* 
 
 ## Prerequisites
 

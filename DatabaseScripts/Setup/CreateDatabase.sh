@@ -3,6 +3,9 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Handle input arguments
 function handle_arguments {
         case $1 in 
@@ -69,7 +72,7 @@ function create_and_seed_jsonb_schema {
 function create_summary_log_file {
     cd /DatabaseScripts
     mkdir SetupSummary
-    summarylogFile="/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt"
+    readonly summarylogFile="/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt"
     touch $summarylogFile
     truncate -s 0 $summarylogFile 
 

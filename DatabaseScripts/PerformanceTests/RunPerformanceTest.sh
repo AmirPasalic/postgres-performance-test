@@ -3,6 +3,9 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Handle input arguments
 function handle_arguments {
         case $1 in 
@@ -39,54 +42,148 @@ function process_input_parameters {
     fi
 }
 
-#Run sql queries
+function print_queries {
+    currentQueries=$1
+
+    for i in "${!currentQueries[@]}"
+        do
+            currentQueryName="${currentQueries[i]}"
+            currentQueryFile="$queriesPath/$currentQueryName"
+            #TODO: here is an error, non declared variable queryResults
+            currentLogFile="${queryResults[i]}"
+            echo "" >> "$currentLogFile"
+            bash "$currentQueryFile" "$currentLogFile"
+            echo "" >> "$currentLogFile"
+        done
+    
+    bash "$query" "$file"
+}
+
+#Run sql queries - NEW
+# refactor it in a way that first all sql queries are executed
+# then all jsonb queries are executed
+# so that in the log files we can write the results first from quries to sql
+# then to jsonb. This way the log file will be much cleaner
+
+# TODO: Continue here
+# Make this work with the RunQueries script
 function run_queries {
+    # initial print of queries to log files
+    print_queries sqlQuries
+
+    # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
-        echo "This is query run number $i" >> $logFile
-        bash "$runQueriesScript" "$logFile"
+        # print intital message about query run count to result log files        
+        for i in "${queryResults[@]}"
+        do
+            currentFile="$logsPath/$i"
+            echo "This is query run number $i" >> "$currentFile"
+            echo "" >> "$currentFile"
+        done
+        # run all sql queries
+        bash "$runQueriesScript" "$logsPath" "sql"
     done
+
+    # initial print of queries to log files
+    print_queries jsonbQuries
+
+    # run queries based on input counter
+    for i in $(seq 1 $queryRunCounter); do
+        # print intital message about query run count to result log files 
+        for i in "${queryResults[@]}"
+        do
+            currentFile="$logsPath/$i"
+            echo "This is query run number $i" >> "$currentFile"
+            echo "" >> "$currentFile"
+        done
+        # run all jsonb queries
+        bash "$runQueriesScript" "$logsPath" "jsonb"
+    done
+}
+
+#Create Test result file
+function create_test_result_log_files {
+    rm -rf "$logsPath"
+    mkdir -p "$logsPath"
+    
+    #declare -a queryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
+
+    for i in "${queryResults[@]}"
+    do
+        touch "$logsPath/$i"
+        truncate -s 0 "$logsPath/$i" 
+    done
+}
+
+# Create a general log file where execution logs will be logged
+function create_general_log_file {
+    logFile="$logsPath/ExecutionLog.txt"
+    touch "$logFile"
+    truncate -s 0 "$logFile"
+}
+
+#Define scriptFile path variables
+function define_scripts {
+    performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
+    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
+    readonly runQueriesScript="$performanceTestScriptPath/RunQueries.sh"
+    readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
+}
+
+function define_files {
+    #TODO: have separate srcript which hosts the queries, and test result files
+    # so I can pull it here and get the arrays. This script can be used then from this file
+    # and also from RunQueries file as well
+    # Construct all of them in one script and source it here and in RunQueries
+
+    declare -a queryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
+    declare -a quries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7")
+    declare -a sqlQuries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql")
+    declare -a jsonbQuries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql")
 }
 
 #Apply indexes to the database tables
 function apply_indexes {
-    echo "Applying Indexes..." >> $logFile
-    bash "$applyIndexes"
-    echo "Applying Indexes Finished!" >> $logFile
-    echo "Rerun queries after Indexes are applied..." >> $logFile
-    run_queries
+    for i in "${queryResults[@]}"
+        do
+            currentFile="$logsPath/$i"
+            echo "Applying Indexes..." >> "$currentFile"
+            bash "$applyIndexes"
+            echo "Applying Indexes Finished!" >> "$currentFile"
+            echo "Retrun queries after Indexes are applied..." >> "$currentFile"
+        done
+        run_queries
 }
-
+    
 #Run main function as the main script flow
 function main {
-    #default value of queryRunCounter is 1.
+    #default value of queryRunCounter is 1 and default value of withIndexes is "".
     queryRunCounter=1
-    #default value of withIndexes is "".
     withIndexes=""
     
     process_input_parameters $@
+    readonly logsPath="/DatabaseScripts/PerformanceTestResults"
+    readonly queriesPath="/DatabaseScripts/PerformanceTests/Queries"
+    define_scripts
+    define_files
 
-    #Define scriptFile path variables
-    insertTextSeparatorScript="/DatabaseScripts/PerformanceTests/InsertTextSeparator.sh"
-    runQueriesScript="/DatabaseScripts/PerformanceTests/RunQueries.sh"
-    applyIndexesScript="/DatabaseScripts/PerformanceTests/ApplyIndexes.sh"
+    create_test_result_log_files
+    create_general_log_file
 
-    #Create Test result file
-    mkdir /DatabaseScripts/PerformanceTestResults
-    logFile="/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt"
-    touch $logFile
-    truncate -s 0 $logFile 
-    
-    #Run queries
+    echo 'Running queries, this could take a while...'
     run_queries
-    bash "$insertTextSeparatorScript" "$logFile"
-
+    
     if [ "$withIndexes" = "withIndex" ]
     then
         apply_indexes
     fi
 
-    echo 'Full Log of Performance test:'
-    cat $logFile;
+    echo 'Running quries finished!'
+    echo ''
+    echo 'Performance test execution logs:'
+    cat $logFile
+    echo ''
+    echo 'For results please view the log files.:'
 }
 
 main $@

@@ -3,11 +3,14 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Show help for the command
 function help {
     #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    tab="    " 
-    double_tab="        "
+    readonly tab="    " 
+    readonly double_tab="        "
     
     echo ""
     echo "NAME"
@@ -27,11 +30,12 @@ function help {
 
 #Handle input arguments for the script
 function handle_arguments {
-        case $1 in 
-            -h | --help )
-                help
-                exit 0;;                 
-        esac
+    argument1=${1-default}
+    case argument1 in 
+        -h | --help )
+            help
+            exit 0;;                 
+    esac
 }
 
 #Run main function as the main script flow
