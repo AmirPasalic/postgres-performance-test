@@ -42,6 +42,31 @@ function process_input_parameters {
     fi
 }
 
+#Define scriptFile path variables
+function define_scripts {
+    performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
+    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
+    readonly runQueriesScript="$performanceTestScriptPath/RunQueries.sh"
+    readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
+}
+
+function define_files {
+    #TODO: have separate srcript which hosts the queries, and test result files
+    # so I can pull it here and get the arrays. This script can be used then from this file
+    # and also from RunQueries file as well
+    # Construct all of them in one script and source it here and in RunQueries
+    
+    local -n currentQueryResults=$1
+    local -n currentQuries=$2
+    local -n currentSqlQuries=$3
+    local -n currentJsonbQuries=$4
+
+    currentQueryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
+    currentQuries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7")
+    currentSqlQuries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql")
+    currentJsonbQuries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql")
+}
+
 function print_queries {
     currentQueries=$1
 
@@ -49,14 +74,11 @@ function print_queries {
         do
             currentQueryName="${currentQueries[i]}"
             currentQueryFile="$queriesPath/$currentQueryName"
-            #TODO: here is an error, non declared variable queryResults
             currentLogFile="${queryResults[i]}"
             echo "" >> "$currentLogFile"
-            bash "$currentQueryFile" "$currentLogFile"
+            cat "$currentQueryFile" >> "$currentLogFile"
             echo "" >> "$currentLogFile"
         done
-    
-    bash "$query" "$file"
 }
 
 #Run sql queries - NEW
@@ -65,18 +87,16 @@ function print_queries {
 # so that in the log files we can write the results first from quries to sql
 # then to jsonb. This way the log file will be much cleaner
 
-# TODO: Continue here
-# Make this work with the RunQueries script
 function run_queries {
     # initial print of queries to log files
-    print_queries sqlQuries
+    print_queries "$sqlQuries"
 
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
         # print intital message about query run count to result log files        
-        for i in "${queryResults[@]}"
+        for j in "${queryResults[@]}"
         do
-            currentFile="$logsPath/$i"
+            currentFile="$logsPath/$j"
             echo "This is query run number $i" >> "$currentFile"
             echo "" >> "$currentFile"
         done
@@ -85,7 +105,7 @@ function run_queries {
     done
 
     # initial print of queries to log files
-    print_queries jsonbQuries
+    print_queries "$jsonbQuries"
 
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
@@ -105,8 +125,6 @@ function run_queries {
 function create_test_result_log_files {
     rm -rf "$logsPath"
     mkdir -p "$logsPath"
-    
-    #declare -a queryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
 
     for i in "${queryResults[@]}"
     do
@@ -120,26 +138,6 @@ function create_general_log_file {
     logFile="$logsPath/ExecutionLog.txt"
     touch "$logFile"
     truncate -s 0 "$logFile"
-}
-
-#Define scriptFile path variables
-function define_scripts {
-    performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
-    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
-    readonly runQueriesScript="$performanceTestScriptPath/RunQueries.sh"
-    readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
-}
-
-function define_files {
-    #TODO: have separate srcript which hosts the queries, and test result files
-    # so I can pull it here and get the arrays. This script can be used then from this file
-    # and also from RunQueries file as well
-    # Construct all of them in one script and source it here and in RunQueries
-
-    declare -a queryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
-    declare -a quries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7")
-    declare -a sqlQuries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql")
-    declare -a jsonbQuries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql")
 }
 
 #Apply indexes to the database tables
@@ -165,7 +163,12 @@ function main {
     readonly logsPath="/DatabaseScripts/PerformanceTestResults"
     readonly queriesPath="/DatabaseScripts/PerformanceTests/Queries"
     define_scripts
-    define_files
+    
+    local queryResults
+    local quries
+    local sqlQuries
+    local jsonbQuries
+    define_files queryResults quries sqlQuries jsonbQuries
 
     create_test_result_log_files
     create_general_log_file

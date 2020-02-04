@@ -38,7 +38,7 @@ function run_qeury {
         queryName="${query}.sql"
     else
         #example: jsonbQuery = Query1JSONB.sql
-        queryName="${queryName}JSONB.sql"
+        queryName="${query}JSONB.sql"
     fi
 
     #example: shortSummaryLog = queryName + ShortLog.txt = Query1ShortLog.txt
