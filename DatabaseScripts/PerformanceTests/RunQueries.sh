@@ -42,12 +42,12 @@ function run_qeury {
     fi
 
     #example: shortSummaryLog = queryName + ShortLog.txt = Query1ShortLog.txt
-    shortSummaryLogFileName="${queryName}ShortLog.txt"
+    shortSummaryLogFileName="${query}ShortLog.txt"
     
     #example: fullSummaryLog = queryName + FullLog.txt = Query2FullLog.txt
-    fullSummaryLogFileName="${queryName}FullLog.txt"
+    fullSummaryLogFileName="${query}FullLog.txt"
 
-    shortLog="$logsPath/$shortSummaryLogFileName" #TODO here is the problem.
+    shortLog="$logsPath/$shortSummaryLogFileName"
     longLog="$logsPath/$fullSummaryLogFileName"
 
     execute_query "$queryName" "$shortLog" "$longLog"
@@ -61,7 +61,6 @@ function main {
     
     cd /DatabaseScripts/PerformanceTests/Queries
 
-    # TODO: refactor this to loop
     run_qeury "Query1" "$schema"
     run_qeury "Query2" "$schema"
     run_qeury "Query3" "$schema"

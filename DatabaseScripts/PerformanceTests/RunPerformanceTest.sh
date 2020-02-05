@@ -50,12 +50,7 @@ function define_scripts {
     readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
 }
 
-function define_files {
-    #TODO: have separate srcript which hosts the queries, and test result files
-    # so I can pull it here and get the arrays. This script can be used then from this file
-    # and also from RunQueries file as well
-    # Construct all of them in one script and source it here and in RunQueries
-    
+function define_files {    
     local -n currentQueryResults=$1
     local -n currentQuries=$2
     local -n currentSqlQuries=$3
@@ -68,28 +63,22 @@ function define_files {
 }
 
 function print_queries {
-    currentQueries=$1
+    currentQueries=("$@")
 
     for i in "${!currentQueries[@]}"
         do
-            currentQueryName="${currentQueries[i]}"
+            currentQueryName="${currentQueries[i]}" #Query1.sql or Quer1JSONB.sql 
             currentQueryFile="$queriesPath/$currentQueryName"
-            currentLogFile="${queryResults[i]}"
+            currentLogFile="$logsPath/${queryResults[i]}"
             echo "" >> "$currentLogFile"
             cat "$currentQueryFile" >> "$currentLogFile"
             echo "" >> "$currentLogFile"
         done
 }
 
-#Run sql queries - NEW
-# refactor it in a way that first all sql queries are executed
-# then all jsonb queries are executed
-# so that in the log files we can write the results first from quries to sql
-# then to jsonb. This way the log file will be much cleaner
-
 function run_queries {
     # initial print of queries to log files
-    print_queries "$sqlQuries"
+    print_queries "${sqlQuries[@]}"
 
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
@@ -97,7 +86,8 @@ function run_queries {
         for j in "${queryResults[@]}"
         do
             currentFile="$logsPath/$j"
-            echo "This is query run number $i" >> "$currentFile"
+            echo "" >> "$currentFile"
+            echo "This is query run number $i:" >> "$currentFile"
             echo "" >> "$currentFile"
         done
         # run all sql queries
@@ -105,15 +95,16 @@ function run_queries {
     done
 
     # initial print of queries to log files
-    print_queries "$jsonbQuries"
+    print_queries "${jsonbQuries[@]}"
 
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
         # print intital message about query run count to result log files 
-        for i in "${queryResults[@]}"
+        for j in "${queryResults[@]}"
         do
-            currentFile="$logsPath/$i"
-            echo "This is query run number $i" >> "$currentFile"
+            currentFile="$logsPath/$j"
+            echo "" >> "$currentFile"
+            echo "This is query run number $i:" >> "$currentFile"
             echo "" >> "$currentFile"
         done
         # run all jsonb queries
@@ -178,15 +169,16 @@ function main {
     
     if [ "$withIndexes" = "withIndex" ]
     then
+        echo 'Applying indexes and rereunning queries again, this could take a while as well...'
         apply_indexes
     fi
 
-    echo 'Running quries finished!'
-    echo ''
-    echo 'Performance test execution logs:'
-    cat $logFile
-    echo ''
-    echo 'For results please view the log files.:'
+    echo "Running quries finished!"
+    echo ""
+    echo "Performance test execution logs:"
+    cat "$logFile"
+    echo ""
+    echo "For full results please view the log files."
 }
 
 main $@

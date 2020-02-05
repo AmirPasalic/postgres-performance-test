@@ -58,10 +58,10 @@ function main {
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh "$@"
 
     rm -r ~/PostgresPerformanceProject/PerformanceTestResults
-    mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults/
+    mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults
     
     # copy performance test results to host machine
-    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults ~/PostgresPerformanceProject/PerformanceTestResults
+    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults/ ~/PostgresPerformanceProject/PerformanceTestResults
 }
 
 main "$@"
