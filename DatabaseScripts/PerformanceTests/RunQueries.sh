@@ -9,22 +9,11 @@ set -o nounset
 #Executs sql queries agains the test database
 function execute_query {    
     query=$1
-    shortLog=$2;
-    longLog=$3;
+    logFile=$2;
 
-    #TODO:
-    # this is the one with just execution time
-    #psql -d "CarReservationsDb" -f "$query" >> "shortLog"
-
-    # Execute with the long log(EXPLAIN ANALYZE)
-    psql -d "CarReservationsDb" -f "$query" >> "$longLog"
-
-    # add empy lies to the log file
-    #echo "" >> $shortLog
-    echo "" >> "$longLog"
-
-    #bash "$insertTextSeparatorScript" "$shortSummaryLog"
-    bash "$insertTextSeparatorScript" "$longLog"
+    psql -d "CarReservationsDb" -f "$query" >> "$logFile"
+    echo "" >> "$logFile"
+    bash "$insertTextSeparatorScript" "$logFile"
 }
 
 function run_qeury {
@@ -40,17 +29,12 @@ function run_qeury {
         #example: jsonbQuery = Query1JSONB.sql
         queryName="${query}JSONB.sql"
     fi
-
-    #example: shortSummaryLog = queryName + ShortLog.txt = Query1ShortLog.txt
-    shortSummaryLogFileName="${query}ShortLog.txt"
     
-    #example: fullSummaryLog = queryName + FullLog.txt = Query2FullLog.txt
-    fullSummaryLogFileName="${query}FullLog.txt"
+    #example: summaryLogFileName = queryName + Log.txt = Query2Log.txt
+    summaryLogFileName="${query}Log.txt"
+    logFile="$logsPath/$summaryLogFileName"
 
-    shortLog="$logsPath/$shortSummaryLogFileName"
-    longLog="$logsPath/$fullSummaryLogFileName"
-
-    execute_query "$queryName" "$shortLog" "$longLog"
+    execute_query "$queryName" "$logFile"
 }
 
 #Run main function as the main script flow

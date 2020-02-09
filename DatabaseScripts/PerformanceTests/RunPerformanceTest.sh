@@ -50,24 +50,26 @@ function define_scripts {
     readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
 }
 
+#Define query and result log files
 function define_files {    
     local -n currentQueryResults=$1
     local -n currentQuries=$2
     local -n currentSqlQuries=$3
     local -n currentJsonbQuries=$4
 
-    currentQueryResults=("Query1FullLog.txt" "Query2FullLog.txt" "Query3FullLog.txt" "Query4FullLog.txt" "Query5FullLog.txt" "Query6FullLog.txt" "Query7FullLog.txt")
+    currentQueryResults=("Query1Log.txt" "Query2Log.txt" "Query3Log.txt" "Query4Log.txt" "Query5Log.txt" "Query6Log.txt" "Query7Log.txt")
     currentQuries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7")
     currentSqlQuries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql")
     currentJsonbQuries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql")
 }
 
+#Initial printing of queries to result Log files
 function print_queries {
     currentQueries=("$@")
 
     for i in "${!currentQueries[@]}"
         do
-            currentQueryName="${currentQueries[i]}" #Query1.sql or Quer1JSONB.sql 
+            currentQueryName="${currentQueries[i]}" #example: will be Query1.sql or Quer1JSONB.sql 
             currentQueryFile="$queriesPath/$currentQueryName"
             currentLogFile="$logsPath/${queryResults[i]}"
             echo "" >> "$currentLogFile"
@@ -76,6 +78,7 @@ function print_queries {
         done
 }
 
+#Running queries
 function run_queries {
     # initial print of queries to log files
     print_queries "${sqlQuries[@]}"
@@ -112,7 +115,7 @@ function run_queries {
     done
 }
 
-#Create Test result file
+#Create test result file
 function create_test_result_log_files {
     rm -rf "$logsPath"
     mkdir -p "$logsPath"
@@ -126,9 +129,9 @@ function create_test_result_log_files {
 
 # Create a general log file where execution logs will be logged
 function create_general_log_file {
-    logFile="$logsPath/ExecutionLog.txt"
-    touch "$logFile"
-    truncate -s 0 "$logFile"
+    executionLogFile="$logsPath/ExecutionLog.txt"
+    touch "$executionLogFile"
+    truncate -s 0 "$executionLogFile"
 }
 
 #Apply indexes to the database tables
@@ -169,14 +172,14 @@ function main {
     
     if [ "$withIndexes" = "withIndex" ]
     then
-        echo 'Applying indexes and rereunning queries again, this could take a while as well...'
+        echo 'Applying indexes and re-running queries again, this could take a while as well...'
         apply_indexes
     fi
 
     echo "Running quries finished!"
     echo ""
     echo "Performance test execution logs:"
-    cat "$logFile"
+    cat "$executionLogFile"
     echo ""
     echo "For full results please view the log files."
 }
