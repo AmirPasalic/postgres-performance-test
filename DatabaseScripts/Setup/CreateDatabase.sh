@@ -107,6 +107,7 @@ function main {
     create_and_seed_sql_schema
     create_and_seed_jsonb_schema
     create_summary_log_file
+    echo "The execution Summary Log file can be viwed at: ~/PostgresPerformanceProject/DatabaseSetup"
 }
 
 main $@

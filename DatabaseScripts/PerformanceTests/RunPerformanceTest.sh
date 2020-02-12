@@ -42,6 +42,18 @@ function process_input_parameters {
     fi
 }
 
+#Will print given message to ExecutionLog.txt and to stdout of current execution terminal
+function print_to_execution_log_and_stdout {
+    currentMessage=$1
+    if [ "$currentMessage" != "" ]
+    then
+        timeStamp=$(date '+%F %T.%3N') #timestamp with miliseconds precision
+        currentMessage="$timeStamp: ${currentMessage}"
+    fi
+    echo "$currentMessage" >> "$executionLogFile"
+    echo "$currentMessage"
+}
+
 #Define scriptFile path variables
 function define_scripts {
     performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
@@ -85,7 +97,9 @@ function run_queries {
 
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
-        # print intital message about query run count to result log files        
+        # print intital message about query run count to result log files
+        print_to_execution_log_and_stdout "Query run number $i for SQL queries is running:"
+
         for j in "${queryResults[@]}"
         do
             currentFile="$logsPath/$j"
@@ -94,6 +108,7 @@ function run_queries {
             echo "" >> "$currentFile"
         done
         # run all sql queries
+        print_to_execution_log_and_stdout "Running SQL queries..."
         bash "$runQueriesScript" "$logsPath" "sql"
     done
 
@@ -103,6 +118,8 @@ function run_queries {
     # run queries based on input counter
     for i in $(seq 1 $queryRunCounter); do
         # print intital message about query run count to result log files 
+        print_to_execution_log_and_stdout "Query run number $i for JSONB queries is running:"
+
         for j in "${queryResults[@]}"
         do
             currentFile="$logsPath/$j"
@@ -111,6 +128,7 @@ function run_queries {
             echo "" >> "$currentFile"
         done
         # run all jsonb queries
+        print_to_execution_log_and_stdout "Running JSONB queries..."
         bash "$runQueriesScript" "$logsPath" "jsonb"
     done
 }
@@ -128,10 +146,12 @@ function create_test_result_log_files {
 }
 
 # Create a general log file where execution logs will be logged
-function create_general_log_file {
+function create_execution_log_file {
     executionLogFile="$logsPath/ExecutionLog.txt"
     touch "$executionLogFile"
     truncate -s 0 "$executionLogFile"
+    echo "Execution Log for performance test: " >> $executionLogFile
+    echo "" >> "$executionLogFile"
 }
 
 #Apply indexes to the database tables
@@ -139,12 +159,23 @@ function apply_indexes {
     for i in "${queryResults[@]}"
         do
             currentFile="$logsPath/$i"
-            echo "Applying Indexes..." >> "$currentFile"
+            print_to_execution_log_and_stdout "Applying indexes..."
+            
             bash "$applyIndexes"
             echo "Applying Indexes Finished!" >> "$currentFile"
-            echo "Retrun queries after Indexes are applied..." >> "$currentFile"
+            
+            print_to_execution_log_and_stdout "Applying Indexes Finished!"
         done
         run_queries
+}
+
+#Prints finishing message after the execution of queries is finished
+function print_summary_message {
+    print_to_execution_log_and_stdout "Running quries finished!"
+    print_to_execution_log_and_stdout ""
+
+    print_to_execution_log_and_stdout "For full results please view the log files."
+    echo "The execution Log can be viwed at ~/PostgresPerformanceProject/PerformanceTestResults"
 }
     
 #Run main function as the main script flow
@@ -162,26 +193,22 @@ function main {
     local quries
     local sqlQuries
     local jsonbQuries
+
     define_files queryResults quries sqlQuries jsonbQuries
-
     create_test_result_log_files
-    create_general_log_file
+    create_execution_log_file
 
-    echo 'Running queries, this could take a while...'
+    print_to_execution_log_and_stdout "Starting execution of queries. This could take a while..."
     run_queries
     
     if [ "$withIndexes" = "withIndex" ]
     then
+        echo "Applying Indexes: " >> $executionLogFile
         echo 'Applying indexes and re-running queries again, this could take a while as well...'
         apply_indexes
     fi
 
-    echo "Running quries finished!"
-    echo ""
-    echo "Performance test execution logs:"
-    cat "$executionLogFile"
-    echo ""
-    echo "For full results please view the log files."
+    print_summary_message
 }
 
 main $@
