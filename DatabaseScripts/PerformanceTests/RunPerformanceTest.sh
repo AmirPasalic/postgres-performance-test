@@ -57,7 +57,6 @@ function print_to_execution_log_and_stdout {
 #Define scriptFile path variables
 function define_scripts {
     performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
-    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
     readonly runQueriesScript="$performanceTestScriptPath/RunQueries.sh"
     readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
 }

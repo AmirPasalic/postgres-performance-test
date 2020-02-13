@@ -35,6 +35,11 @@ function process_input_parameters {
     fi
 }
 
+function define_scripts {
+    performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
+    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
+}
+
 function create_database {
     cd /DatabaseScripts/Setup
     echo 'Creating the Database...'
@@ -84,11 +89,13 @@ function create_summary_log_file {
     echo "Database Name: '$database'" >> $summarylogFile
     echo "" >> $summarylogFile
 
+    bash "$insertTextSeparatorScript" "$summarylogFile"
     echo "Table Information: '$database' database contains following tables: " >> $summarylogFile
     echo "" >> $summarylogFile
     psql -c "\dt" -d "$database" >> $summarylogFile
-    
     echo "" >> $summarylogFile
+
+    bash "$insertTextSeparatorScript" "$summarylogFile"
     echo "Rows inserted per table:" >> $summarylogFile
     echo "" >> $summarylogFile
     echo "cars: $carsCount" >> $summarylogFile
@@ -97,12 +104,31 @@ function create_summary_log_file {
     echo "jsonb_cars: $carsCount" >> $summarylogFile
     echo "jsonb_customers: $customersCount" >> $summarylogFile
     echo "jsonb_car_reservations: $carReservationsCount" >> $summarylogFile
+    echo "" >> $summarylogFile
+
+    bash "$insertTextSeparatorScript" "$summarylogFile"
+    echo "Details:" >> $summarylogFile
+    echo "" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ cars" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ customers" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ car_reservations" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ jsonb_cars" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ jsonb_customers" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
+    psql -c "\d+ jsonb_car_reservations" -d "$database" >> $summarylogFile
+    echo "" >> $summarylogFile
 }
 
 #Run main function as the main script flow
 function main {
     process_input_parameters $@
     database="CarReservationsDb"
+    define_scripts
     create_database
     create_and_seed_sql_schema
     create_and_seed_jsonb_schema

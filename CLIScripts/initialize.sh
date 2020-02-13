@@ -57,9 +57,11 @@ function main {
     # create database and seed data
     docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh $@
 
+    rm -r ~/PostgresPerformanceProject/DatabaseSetup/
     mkdir -p ~/PostgresPerformanceProject/DatabaseSetup/
+    
     # save Database setup logs to host machine
-    docker exec -it postgres-db cat "/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt" > ~/PostgresPerformanceProject/DatabaseSetup/PerformanceTestLog.txt
+    docker exec -it postgres-db cat "/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt" > ~/PostgresPerformanceProject/DatabaseSetup/CarReservationsDbSetupSummary.txt
 }
 
 main $@
