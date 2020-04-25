@@ -30,15 +30,16 @@ function help {
 function handle_arguments {
         # passed argument or if not set "default"
         argument1=${1-default}
-        case argument1 in 
+        case $argument1 in
             -h | --help )
                 help
-                exit 0;;                 
+                exit 0;;
         esac
 }
 
 #Run main function as the main script flow
 function main {
+    echo 'I AM HERE.'
     handle_arguments $@
     #Cleanup containers
     docker-compose -f "../docker-compose-postgres.yml" down -v

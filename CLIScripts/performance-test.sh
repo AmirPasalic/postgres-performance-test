@@ -43,7 +43,7 @@ function help {
 #Handle input arguments for the script
 function handle_arguments {
     argument1=${1-default}
-    case argument1 in 
+    case $argument1 in
         -h | --help )
             help
             exit 0;;                 
