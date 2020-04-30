@@ -8,21 +8,50 @@ set -o nounset
 
 #Handle input arguments
 function handle_arguments {
+        isNumberRegExpession='^[0-9]+$'
+        
         case $1 in 
             -c | --counter )
+                #if argument $2 does not have value or is not a number
+                if [ -z "${2+x}" ] || ! [[ $2 =~ $isNumberRegExpession ]] ; then
+                    echo ERROR: When using -c or --counter you need to specify a number as second parameter.
+                    exit 1
+                fi
                 queryRunCounter=$2;;
             -wi | --withIndex )    
-                withIndexes=$2;;
-            *)
-                queryRunCounter=1
-                withIndexes="";;                     
+                withIndexes=true;;                   
         esac
+
+        # if $2 has a value
+        if [ -n "${2+x}" ]
+        then
+            case $2 in 
+                -c | --counter )
+                    #if argument $3 does not have value or is not a number
+                    if [ -z "${3+x}" ] || ! [[ $3 =~ $isNumberRegExpession ]] ; then
+                        echo ERROR: When using -c or --counter you need to specify a number as second parameter.
+                        exit 1
+                    fi
+                    queryRunCounter=$3;;
+                -wi | --withIndex )    
+                    withIndexes=true;;                 
+        esac
+        fi
+
+        # if $3 has a value
+        if [ -n "${3+x}" ]
+        then
+            case $3 in 
+                -wi | --withIndex )    
+                    withIndexes=true;;                 
+            esac
+        fi
 }
 
 #Process input parameters for this script
 function process_input_parameters {
-    if [ "$#" -ne 0 ] && [ "$#" -ne 2 ] && [ "$#" -ne 4 ]; then
-        echo ERROR: number of option parameters is not corrext. 1>&2
+    if [ "$#" -ne 0 ] && [ "$#" -ne 1 ] && [ "$#" -ne 2 ] && [ "$#" -ne 3 ]; then
+        echo ERROR: number of option parameters is not correct. 1>&2
         exit 1
     fi
 
@@ -31,14 +60,19 @@ function process_input_parameters {
         queryRunCounter=1
     fi
 
+    if [ "$#" -eq 1 ] 
+    then
+        handle_arguments $1
+    fi
+
     if [ "$#" -eq 2 ] 
     then
         handle_arguments $1 $2
     fi
 
-    if [ "$#" -eq 4 ] 
+    if [ "$#" -eq 3 ] 
     then
-        handle_arguments $3 $4
+        handle_arguments $1 $2 $3
     fi
 }
 
@@ -160,7 +194,7 @@ function apply_indexes {
             currentFile="$logsPath/$i"
             print_to_execution_log_and_stdout "Applying indexes..."
             
-            bash "$applyIndexes"
+            #bash "$applyIndexesScript"
             echo "Applying Indexes Finished!" >> "$currentFile"
             
             print_to_execution_log_and_stdout "Applying Indexes Finished!"
@@ -179,9 +213,9 @@ function print_summary_message {
     
 #Run main function as the main script flow
 function main {
-    #default value of queryRunCounter is 1 and default value of withIndexes is "".
+    #default value of queryRunCounter is 1 and default value of withIndexes is false.
     queryRunCounter=1
-    withIndexes=""
+    withIndexes=false
     
     process_input_parameters $@
     readonly logsPath="/DatabaseScripts/PerformanceTestResults"
@@ -200,7 +234,7 @@ function main {
     print_to_execution_log_and_stdout "Starting execution of queries. This could take a while..."
     run_queries
     
-    if [ "$withIndexes" = "withIndex" ]
+    if [ "$withIndexes" = true ]
     then
         echo "Applying Indexes: " >> $executionLogFile
         echo 'Applying indexes and re-running queries again, this could take a while as well...'

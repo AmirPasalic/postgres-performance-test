@@ -34,7 +34,7 @@ function help {
     echo ""
     echo "$tab -wi, --withIndex"
     echo "$double_tab Parameter which indicates if indexes should be applied to the database after the first query run." 
-    echo "$double_tab Example would be performance-test.sh -wi withIndex"
+    echo "$double_tab Example would be performance-test.sh -wi"
     echo "$double_tab This would run the queries before applying the indexes and once again after applying the indexes"
     echo "$double_tab to the database."
     echo ""

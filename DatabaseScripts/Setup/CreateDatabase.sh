@@ -10,16 +10,22 @@ set -o nounset
 function handle_arguments {
         case $1 in 
             -rn | --recordNumber )
+                #if argument $2 does not have value or is not a number
+                if [ -z "${2+x}" ] || ! [[ $2 =~ $isNumberRegExpession ]] ; then
+                    echo ERROR: When using -rn or --recordNumber you need to specify a number as second parameter.
+                    exit 1
+                fi
                 numberOfRecords=$2;;
             *)
-                numberOfRecords=1000;;                     
+                echo ERROR: Input arguments are not supported.
+                exit 1;;                     
         esac
 }
 
 #Process input parameters for this script
 function process_input_parameters {
     if [ "$#" -ne 0 ] && [ "$#" -ne 2 ]; then
-        echo ERROR: number of option parameters is not corrext. 1>&2
+        echo ERROR: number of option parameters is not correct.
         exit 1
     fi
 

@@ -34,13 +34,28 @@ function handle_arguments {
             -h | --help )
                 help
                 exit 0;;
+            *)
+                echo ERROR: Input argument not supported.
+                exit 1;; 
         esac
+}
+
+#Process input parameters for this script
+function process_input_parameters {
+    if [ "$#" -ne 0 ] && [ "$#" -ne 1 ]; then
+        echo ERROR: number of option parameters is not correct.
+        exit 1
+    fi
+
+    if [ "$#" -eq 1 ] 
+    then
+        handle_arguments $1
+    fi
 }
 
 #Run main function as the main script flow
 function main {
-    echo 'I AM HERE.'
-    handle_arguments $@
+    process_input_parameters $@
     #Cleanup containers
     docker-compose -f "../docker-compose-postgres.yml" down -v
 }

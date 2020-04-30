@@ -30,17 +30,34 @@ function help {
 
 #Handle input arguments for the script
 function handle_arguments {
-    argument1=${1-default}
-    case $argument1 in
-        -h | --help )
-            help
-            exit 0;;                 
-    esac
+        # passed argument or if not set "default"
+        argument1=${1-default}
+        case $argument1 in
+            -h | --help )
+                help
+                exit 0;;
+            *)
+                echo ERROR: Input argument not supported.
+                exit 1;; 
+        esac
+}
+
+#Process input parameters for this script
+function process_input_parameters {
+    if [ "$#" -ne 0 ] && [ "$#" -ne 1 ]; then
+        echo ERROR: number of option parameters is not correct.
+        exit 1
+    fi
+
+    if [ "$#" -eq 1 ] 
+    then
+        handle_arguments $1
+    fi
 }
 
 #Run main function as the main script flow
 function main {
-    handle_arguments $@
+    process_input_parameters $@
     #Stop containers
     docker-compose -f "../docker-compose-postgres.yml" stop
 }
