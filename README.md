@@ -36,7 +36,7 @@ The initialize.sh script will create CarReservationsDb and seed test Data to it.
 After the setup and data seeding of the test database is done you can view the summary of the initialize.sh script 
 in form of text log file at:
 ~/PostgresPerformanceProject/DatabaseSetup/CarReservationsDbSetupSummary.txt
-2. Step: run the performance-test.sh script in order to execute the queries against the test
+2. Step: run the performance_test.sh script in order to execute the queries against the test
 database and its tables.
 3. Step: The performance test results will be written to text file as output logs on your host machine.
 The location of the log file is: ~/PostgresPerformanceProject/PerformanceTestResults/CarReservationsDbSetupSummary.txt
@@ -59,9 +59,9 @@ The following scripts exist in the project:
 
 - initialize.sh
 - cleanup.sh
-- start-db.sh
-- stop-db.sh
-- performance-test.sh
+- start_db.sh
+- stop_db.sh
+- performance_test.sh
 
 Each script has an help page with some information about the script, arguments which can be passed.
 The help page can be viewed by typing for example: `initialize.sh --help or initialize.sh -h` 
@@ -93,30 +93,30 @@ Example: `cleanup.sh --help or cleanup.sh -h`
 
 #### Start Db
 
-The start-db.sh script will start the docker container which hosts the CarReservationsDb which was created with the initialize.sh command.
+The start_db.sh script will start the docker container which hosts the CarReservationsDb which was created with the initialize.sh command.
 
-More info's on this command can be found in the help page of the start-db.sh.
+More info's on this command can be found in the help page of the start_db.sh.
 
-Example: `start-db.sh --help or start-db.sh -h`
+Example: `start_db.sh --help or start_db.sh -h`
 
 #### Stop Db
 
-The stop-db.sh script will stop the docker container which hosts the CarReservationsDb which was created with the initialize.sh command. In order to start it again you can use the start-db.sh script.
+The stop_db.sh script will stop the docker container which hosts the CarReservationsDb which was created with the initialize.sh command. In order to start it again you can use the start_db.sh script.
 
-More info's on this command can be found in the help page of the stop-db.sh
+More info's on this command can be found in the help page of the stop_db.sh
 
-Example: `stop-db.sh --help or stop-db.sh -h`
+Example: `stop_db.sh --help or stop_db.sh -h`
 
 
 #### Performance test
 
-The performance-test.sh script will run a set of queries on the CarReservationsDb. Prerequisit is of course that
+The performance_test.sh script will run a set of queries on the CarReservationsDb. Prerequisit is of course that
 we have created the CarReservationsDb with the initialize.sh script.
 
 Performance test can be run with some arguments like how many times the queries should be run, should the queries run
 also with applied indexes on the database.
 
-More info's on this command can be found in the help page of the performance-test.sh
+More info's on this command can be found in the help page of the performance_test.sh
 
-Example: `performance-test.sh --help or performance-test.sh -h`
+Example: `performance_test.sh --help or performance_test.sh -h`
 

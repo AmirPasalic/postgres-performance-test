@@ -55,7 +55,7 @@ function main {
     sleep 1s
 
     # create database and seed data
-    docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh $@
+    docker exec -it postgres-db bash ./DatabaseScripts/Setup/create_database.sh $@
 
     rm -r ~/PostgresPerformanceProject/DatabaseSetup/
     mkdir -p ~/PostgresPerformanceProject/DatabaseSetup/
