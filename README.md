@@ -15,7 +15,7 @@ The motivation was to test in PostgreSQL db how standard sql schema compares to 
 Seeing multiple project going away from standard relational table design for multiple reasons I wanted to test the impact
 on some standard or often used queries.
 
-*As always my standard motivation behind this project is as always to learn something and try things out.* 
+*As always my standard motivation behind this and any other project is as always to learn something and try things out.* 
 
 ## Prerequisites
 
@@ -35,11 +35,11 @@ In order to setup the database and run the performance tests you need to:
 The initialize.sh script will create CarReservationsDb and seed test Data to it.
 After the setup and data seeding of the test database is done you can view the summary of the initialize.sh script 
 in form of text log file at:
-~/PostgresPerformanceProject/DatabaseSetup/PerformanceTestLog.txt
+~/PostgresPerformanceProject/DatabaseSetup/CarReservationsDbSetupSummary.txt
 2. Step: run the performance-test.sh script in order to execute the queries against the test
 database and its tables.
 3. Step: The performance test results will be written to text file as output logs on your host machine.
-The location of the log file is: ~/PostgresPerformanceProject/PerformanceTestResults/PerformanceTestLog.txt
+The location of the log file is: ~/PostgresPerformanceProject/PerformanceTestResults/CarReservationsDbSetupSummary.txt
 This log file will contain all the information about the queries including the execution plans, planning 
 and execution time.
 

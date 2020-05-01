@@ -3,10 +3,13 @@
 #Exit when any command fails
 set -e
 
+#Exit script if an unsed variable is used
+set -o nounset
+
 #Show help for the command
 function help {
-    tab="    " #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    double_tab="        "
+    readonly tab="    " #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
+    readonly double_tab="        "
     echo ""
     echo "NAME"
     echo "$tab performance-test.sh"
@@ -31,7 +34,7 @@ function help {
     echo ""
     echo "$tab -wi, --withIndex"
     echo "$double_tab Parameter which indicates if indexes should be applied to the database after the first query run." 
-    echo "$double_tab Example would be performance-test.sh -wi withIndex"
+    echo "$double_tab Example would be performance-test.sh -wi"
     echo "$double_tab This would run the queries before applying the indexes and once again after applying the indexes"
     echo "$double_tab to the database."
     echo ""
@@ -39,11 +42,12 @@ function help {
 
 #Handle input arguments for the script
 function handle_arguments {
-        case $1 in 
-            -h | --help )
-                help
-                exit 0;;                 
-        esac
+    argument1=${1-default}
+    case $argument1 in
+        -h | --help )
+            help
+            exit 0;;                 
+    esac
 }
 
 #Run main function as the main script flow
@@ -53,9 +57,11 @@ function main {
     # run queries on schemas
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh "$@"
 
-    mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults/
-    # save performance test results to host machine
-    docker exec -it postgres-db cat "/DatabaseScripts/PerformanceTestResults/PerformanceTestLog.txt" > ~/PostgresPerformanceProject/PerformanceTestResults/PerformanceTestLog.txt
+    rm -r ~/PostgresPerformanceProject/PerformanceTestResults
+    mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults
+    
+    # copy performance test results to host machine
+    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults/ ~/PostgresPerformanceProject/PerformanceTestResults
 }
 
 main "$@"
