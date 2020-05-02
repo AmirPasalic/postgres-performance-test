@@ -55,7 +55,7 @@ function main {
     handle_arguments "$@"
 
     # run queries on schemas
-    docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/RunPerformanceTest.sh "$@"
+    docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/run_performance_test.sh "$@"
 
     rm -r ~/PostgresPerformanceProject/PerformanceTestResults
     mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults

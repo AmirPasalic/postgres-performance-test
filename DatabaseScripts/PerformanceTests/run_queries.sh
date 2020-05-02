@@ -41,7 +41,7 @@ function run_qeury {
 function main {    
     logsPath=$1
     schema=$2
-    readonly insertTextSeparatorScript="/DatabaseScripts/PerformanceTests/InsertTextSeparator.sh"
+    readonly insertTextSeparatorScript="/DatabaseScripts/PerformanceTests/insert_text_separator.sh"
     
     cd /DatabaseScripts/PerformanceTests/Queries
 

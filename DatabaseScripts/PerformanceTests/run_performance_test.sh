@@ -91,8 +91,8 @@ function print_to_execution_log_and_stdout {
 #Define scriptFile path variables
 function define_scripts {
     performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
-    readonly runQueriesScript="$performanceTestScriptPath/RunQueries.sh"
-    readonly applyIndexesScript="$performanceTestScriptPath/ApplyIndexes.sh"
+    readonly runQueriesScript="$performanceTestScriptPath/run_queries.sh"
+    readonly applyIndexesScript="$performanceTestScriptPath/apply_indexes.sh"
 }
 
 #Define query and result log files

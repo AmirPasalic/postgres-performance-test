@@ -43,7 +43,7 @@ function process_input_parameters {
 
 function define_scripts {
     performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
-    readonly insertTextSeparatorScript="$performanceTestScriptPath/InsertTextSeparator.sh"
+    readonly insertTextSeparatorScript="$performanceTestScriptPath/insert_text_separator.sh"
 }
 
 function create_database {
