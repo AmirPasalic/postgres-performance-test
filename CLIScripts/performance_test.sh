@@ -1,42 +1,37 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
-
-#Exit script if an unsed variable is used
-set -o nounset
+source ../Common/constants.sh
+source ../Common/default_script_setup.sh
 
 #Show help for the command
 function help {
-    readonly tab="    " #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    readonly double_tab="        "
     echo ""
     echo "NAME"
-    echo "$tab performance-test.sh"
+    echo "$TAB performance-test.sh"
     echo ""
     echo "DESCRIPTION"
-    echo "$tab performance-test.sh help command page"
-    echo "$tab This command executes the performance test on a test database."
-    echo "$tab In order to setup the test database you need to run the command: bash initialize.sh."
-    echo "$tab More infos on that you can find by visiting the help page of the initialize.sh."
-    echo "$tab Example: initialize.sh --help or initialize.sh -h"
+    echo "$TAB performance-test.sh help command page"
+    echo "$TAB This command executes the performance test on a test database."
+    echo "$TAB In order to setup the test database you need to run the command: bash initialize.sh."
+    echo "$TAB More infos on that you can find by visiting the help page of the initialize.sh."
+    echo "$TAB Example: initialize.sh --help or initialize.sh -h"
     echo ""
-    echo "$tab performance-test.sh help command will run the test queries on the CarReservationsDb."
-    echo "$tab Each query run on CarReservationsDb will run on a Standard SQL based schema and on JSONB based schema."
-    echo "$tab By default the command: performance-test.sh will run the queries on the database only once and"
-    echo "$tab without applying indexes."
+    echo "$TAB performance-test.sh help command will run the test queries on the CarReservationsDb."
+    echo "$TAB Each query run on CarReservationsDb will run on a Standard SQL based schema and on JSONB based schema."
+    echo "$TAB By default the command: performance-test.sh will run the queries on the database only once and"
+    echo "$TAB without applying indexes."
     echo ""
-    echo "$tab Options:"
+    echo "$TAB Options:"
     echo ""
-    echo "$tab -c, --counter"
-    echo "$double_tab Counter for how many time the querie execution should be repeated." 
-    echo "$double_tab Example would be performance-test.sh -c 3"
+    echo "$TAB -c, --counter"
+    echo "$DOUBLE_TAB Counter for how many time the querie execution should be repeated." 
+    echo "$DOUBLE_TAB Example would be performance-test.sh -c 3"
     echo ""
-    echo "$tab -wi, --withIndex"
-    echo "$double_tab Parameter which indicates if indexes should be applied to the database after the first query run." 
-    echo "$double_tab Example would be performance-test.sh -wi"
-    echo "$double_tab This would run the queries before applying the indexes and once again after applying the indexes"
-    echo "$double_tab to the database."
+    echo "$TAB -wi, --withIndex"
+    echo "$DOUBLE_TAB Parameter which indicates if indexes should be applied to the database after the first query run." 
+    echo "$DOUBLE_TAB Example would be performance-test.sh -wi"
+    echo "$DOUBLE_TAB This would run the queries before applying the indexes and once again after applying the indexes"
+    echo "$DOUBLE_TAB to the database."
     echo ""
 }
 

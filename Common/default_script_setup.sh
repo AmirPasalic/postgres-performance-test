@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#Exit when any command fails
+#Exit the script when any command fails
 set -e
 
-#Exit script if an unsed variable is used
+#Exit the script if an unused variable is used
 set -o nounset

@@ -1,28 +1,21 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
-
-#Exit script if an unsed variable is used
-set -o nounset
+source ../Common/constants.sh
+source ../Common/default_script_setup.sh
 
 #Show help for the command
 function help {
-    #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    readonly tab="    " 
-    readonly double_tab="        "
-    
     echo ""
     echo "NAME"
-    echo "$tab cleanup.sh"
+    echo "$TAB cleanup.sh"
     echo ""
     echo "DESCRIPTION"
-    echo "$tab cleanup.sh command page"
-    echo "$tab This command cleans up CarReservationsDb database (deletes the database and all its data)."    
+    echo "$TAB cleanup.sh command page"
+    echo "$TAB This command cleans up CarReservationsDb database (deletes the database and all its data)."    
     echo ""
-    echo "$tab You can create the test db database CarReservationsDb by running the initialize.sh command"
-    echo "$tab More infos on that you can find by visiting the help page of the initialize.sh."
-    echo "$tab Example: initialize.sh --help or initialize.sh -h"
+    echo "$TAB You can create the test db database CarReservationsDb by running the initialize.sh command"
+    echo "$TAB More infos on that you can find by visiting the help page of the initialize.sh."
+    echo "$TAB Example: initialize.sh --help or initialize.sh -h"
     echo ""
 }
 

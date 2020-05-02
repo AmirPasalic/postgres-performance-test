@@ -1,30 +1,23 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
-
-#Exit script if an unsed variable is used
-set -o nounset
+source ../Common/constants.sh
+source ../Common/default_script_setup.sh
 
 #Show help for the command
 function help {
-    #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    readonly tab="    " 
-    readonly double_tab="        "
-    
     echo ""
     echo "NAME"
-    echo "$tab stop-db.sh"
+    echo "$TAB stop-db.sh"
     echo ""
     echo "DESCRIPTION"
-    echo "$tab stop-db.sh command page"
-    echo "$tab This command stops the Postgresql docker container where CarReservationsDb database is running."    
+    echo "$TAB stop-db.sh command page"
+    echo "$TAB This command stops the Postgresql docker container where CarReservationsDb database is running."    
     echo ""
-    echo "$tab You can start the Postgresql docker container where CarReservationsDb is running with the start_db.sh command"
-    echo "$tab More infos on that you can find by visiting the help page of the start_db.sh."
-    echo "$tab Example: start_db.sh --help or start_db.sh -h"
-    echo "$tab Also check the initialize.sh command by running the help page of the initialize.sh"
-    echo "$tab Example: initialize.sh --help or initialize.sh -h"
+    echo "$TAB You can start the Postgresql docker container where CarReservationsDb is running with the start_db.sh command"
+    echo "$TAB More infos on that you can find by visiting the help page of the start_db.sh."
+    echo "$TAB Example: start_db.sh --help or start_db.sh -h"
+    echo "$TAB Also check the initialize.sh command by running the help page of the initialize.sh"
+    echo "$TAB Example: initialize.sh --help or initialize.sh -h"
     echo ""
 }
 
