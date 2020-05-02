@@ -1,10 +1,6 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
-
-#Exit script if an unsed variable is used
-set -o nounset
+source /Common/default_script_setup.sh
 
 function main {
     file=$1
