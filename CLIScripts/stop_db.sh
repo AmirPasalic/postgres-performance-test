@@ -21,16 +21,16 @@ function help {
     echo ""
 }
 
-#Handle input arguments for the script
+#Handle input parameters for the script
 function handle_parameters {
-        # passed argument or if not set "default"
-        argument1=${1-default}
-        case $argument1 in
+        # passed parameter or if not set "default"
+        parameter1=${1-default}
+        case $parameter1 in
             -h | --help )
                 help
                 exit 0;;
             *)
-                echo ERROR: Input argument not supported.
+                echo ERROR: Input parameter not supported.
                 exit 1;; 
         esac
 }
@@ -51,7 +51,7 @@ function process_input_parameters {
 #Run main function as the main script flow
 function main {
     process_input_parameters $@
-    #Stop containers
+    # stop containers
     docker-compose -f "../docker-compose-postgres.yml" stop
 }
 

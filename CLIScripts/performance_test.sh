@@ -35,10 +35,10 @@ function help {
     echo ""
 }
 
-#Handle input arguments for the script
+#Handle input parameters for the script
 function handle_parameters {
-    argument1=${1-default}
-    case $argument1 in
+    parameter1=${1-default}
+    case $parameter1 in
         -h | --help )
             help
             exit 0;;                 

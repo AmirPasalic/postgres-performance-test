@@ -119,4 +119,3 @@ also with applied indexes on the database.
 More info's on this command can be found in the help page of the performance_test.sh
 
 Example: `performance_test.sh --help or performance_test.sh -h`
-

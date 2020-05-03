@@ -3,7 +3,7 @@
 source /Common/default_script_setup.sh
 source /Common/constants.sh
 
-#Handle input arguments
+#Handle input parameters
 function handle_parameters {
         case $1 in 
             -rn | --recordNumber )
@@ -14,7 +14,7 @@ function handle_parameters {
                 fi
                 number_of_records=$2;;
             *)
-                echo ERROR: Input arguments are not supported.
+                echo ERROR: Input parameters are not supported.
                 exit 1;;                     
         esac
 }
@@ -32,11 +32,13 @@ function process_input_parameters {
     fi
 }
 
+#Define local constants for this script
 function define_scripts {
     performance_test_script_path="/DatabaseScripts/PerformanceTests"
     readonly INSERT_TEXT_SEPARATOR_SCRIPT="$performance_test_script_path/insert_text_separator.sh"
 }
 
+#Start database creation process
 function create_database {
     echo 'Creating the Database...'
     psql -f /DatabaseScripts/Setup/CreateDatabase.sql
@@ -48,11 +50,11 @@ function create_and_seed_sql_schema {
     psql -f /DatabaseScripts/Setup/Standard/InitializeSchema.sql
     echo "Initialize Database table schema for: cars, customers and reservations finished."
     
-    # Create function
+    # create function
     echo "Creating seed_data function..."
     psql -d "$database" -f /DatabaseScripts/Setup/Standard/SeedData.sql
     
-    # Call seed_data function
+    # call seed_data function
     echo "Seeding data..."
     psql -d "$database" -c "SELECT seed_data($number_of_records)" -f /DatabaseScripts/Setup/Standard/SeedData.sql
 
@@ -67,7 +69,7 @@ function create_and_seed_jsonb_schema {
     echo "Seeding JSONB schema data finished."
 }
 
-# Creates summary log file where infromation about created tables can be viewed
+#Creates summary log file where infromation about created tables can be viewed
 function create_summary_log_file {
     mkdir -p /DatabaseScripts/SetupSummary/
     local summary_log_file="/DatabaseScripts/SetupSummary/CarReservationsDbSetupSummary.txt"

@@ -189,7 +189,7 @@ function apply_indexes {
             local current_file="$LOGS_PATH/$i"
             print_to_execution_log_and_stdout "Applying indexes..."
             
-            #bash "$apply_indexes_script"
+            # bash "$apply_indexes_script"
             echo "Applying Indexes Finished!" >> "$current_file"
             
             print_to_execution_log_and_stdout "Applying Indexes Finished!"
@@ -208,7 +208,7 @@ function print_summary_message {
     
 #Run main function as the main script flow
 function main {
-    #default value of query_run_counter is 1 and default value of with_indexes is false.
+    # default value of query_run_counter is 1 and default value of with_indexes is false.
     local query_run_counter=1
     local with_indexes=false
     
