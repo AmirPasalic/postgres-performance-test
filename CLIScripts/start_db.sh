@@ -22,7 +22,7 @@ function help {
 }
 
 #Handle input arguments for the script
-function handle_arguments {
+function handle_parameters {
         # passed argument or if not set "default"
         argument1=${1-default}
         case $argument1 in
@@ -44,7 +44,7 @@ function process_input_parameters {
 
     if [ "$#" -eq 1 ] 
     then
-        handle_arguments $1
+        handle_parameters $1
     fi
 }
 

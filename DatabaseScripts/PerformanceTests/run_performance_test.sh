@@ -3,8 +3,8 @@
 source /Common/default_script_setup.sh
 source /Common/constants.sh
 
-#Handle input arguments
-function handle_arguments {
+#Handle input parameters
+function handle_parameters {
         case $1 in 
             -c | --counter )
                 #if argument $2 does not have value or is not a number
@@ -57,17 +57,17 @@ function process_input_parameters {
 
     if [ "$#" -eq 1 ] 
     then
-        handle_arguments $1
+        handle_parameters $1
     fi
 
     if [ "$#" -eq 2 ] 
     then
-        handle_arguments $1 $2
+        handle_parameters $1 $2
     fi
 
     if [ "$#" -eq 3 ] 
     then
-        handle_arguments $1 $2 $3
+        handle_parameters $1 $2 $3
     fi
 }
 

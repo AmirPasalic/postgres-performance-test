@@ -36,7 +36,7 @@ function help {
 }
 
 #Handle input arguments for the script
-function handle_arguments {
+function handle_parameters {
     argument1=${1-default}
     case $argument1 in
         -h | --help )
@@ -47,7 +47,7 @@ function handle_arguments {
 
 #Run main function as the main script flow
 function main {
-    handle_arguments "$@"
+    handle_parameters "$@"
 
     # run queries on schemas
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/run_performance_test.sh "$@"

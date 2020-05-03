@@ -4,7 +4,7 @@ source /Common/default_script_setup.sh
 source /Common/constants.sh
 
 #Handle input arguments
-function handle_arguments {
+function handle_parameters {
         case $1 in 
             -rn | --recordNumber )
                 #if argument $2 does not have value or is not a number
@@ -28,7 +28,7 @@ function process_input_parameters {
 
     if [ "$#" -eq 2 ] 
     then
-        handle_arguments $1 $2
+        handle_parameters $1 $2
     fi
 }
 

@@ -32,7 +32,7 @@ function help {
 }
 
 #Handle input arguments for the script
-function handle_arguments {
+function handle_parameters {
     argument1=${1-default}
     case $argument1 in
         -h | --help )
@@ -43,7 +43,7 @@ function handle_arguments {
 
 #Run main function as the main script flow
 function main {
-    handle_arguments $@
+    handle_parameters $@
     docker-compose -f "../docker-compose-postgres.yml" up -d --build
     sleep 1s
 
