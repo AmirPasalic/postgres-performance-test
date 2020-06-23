@@ -56,7 +56,7 @@ function main {
     mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults
     
     # copy performance test results to host machine
-    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults/ ~/PostgresPerformanceProject/PerformanceTestResults
+    docker cp postgres-db:/DatabaseScripts/PerformanceTestResults/ ~/PostgresPerformanceProject
 }
 
 main "$@"
