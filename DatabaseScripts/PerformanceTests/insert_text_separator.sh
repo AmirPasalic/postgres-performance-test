@@ -1,11 +1,8 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
+source /Common/default_script_setup.sh
 
-#Exit script if an unsed variable is used
-set -o nounset
-
+#Run main function as the main script flow
 function main {
     file=$1
     echo '------------------------------------------------------------' >> "$file"

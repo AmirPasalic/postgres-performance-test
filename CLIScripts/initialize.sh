@@ -1,47 +1,40 @@
 #!/bin/bash
 
-#Exit when any command fails
-set -e
-
-#Exit script if an unsed variable is used
-set -o nounset
+source ../Common/constants.sh
+source ../Common/default_script_setup.sh
 
 #Show help for the command
 function help {
-    #used as replacement for echo /t has inconsistencies for different terminal clients app emulators
-    readonly tab="    " 
-    readonly double_tab="        "
-    
     echo ""
     echo "NAME"
-    echo "$tab initialize.sh"
+    echo "$TAB initialize.sh"
     echo ""
     echo "DESCRIPTION"
-    echo "$tab initialize.sh help page"
-    echo "$tab This command creates a test database called CarReservationsDb and seeds test"
-    echo "$tab data to that database."
-    echo "$tab It will create standard pure sql schema tables and jsonb tables with structure: ."
-    echo "$tab Id as uuid and data as JOSNB."
+    echo "$TAB initialize.sh help page"
+    echo "$TAB This command creates a test database called CarReservationsDb and seeds test"
+    echo "$TAB data to that database."
+    echo "$TAB It will create standard pure sql schema tables and jsonb tables with structure: ."
+    echo "$TAB Id as uuid and data as JOSNB."
     echo ""
-    echo "$tab This database with its tables and data is used for running the performance test."
-    echo "$tab More infos on that you can find by visiting the help page of the performance-test.sh."
-    echo "$tab Example performance-test.sh --help or performance-test.sh -h"
+    echo "$TAB This database with its tables and data is used for running the performance test."
+    echo "$TAB More infos on that you can find by visiting the help page of the performance-test.sh."
+    echo "$TAB Example performance-test.sh --help or performance-test.sh -h"
     echo ""
-    echo "$tab This database can be removed with all its data with the cleanup.sh command."
-    echo "$tab More infos on that you can find by visiting the help page of the cleanup.sh."
-    echo "$tab Example: cleanup.sh --help or cleanup.sh -h"
+    echo "$TAB This database can be removed with all its data with the cleanup.sh command."
+    echo "$TAB More infos on that you can find by visiting the help page of the cleanup.sh."
+    echo "$TAB Example: cleanup.sh --help or cleanup.sh -h"
     echo ""
-    echo "$tab Options:"
+    echo "$TAB Options:"
     echo ""
-    echo "$tab -rn, --recordNumber"
-    echo "$double_tab Record number that should be used for the Initialization of the CarReservationsDb database." 
+    echo "$TAB -rn, --recordNumber"
+    echo "$DOUBLE_TAB Record number that should be used for the Initialization of the CarReservationsDb database." 
     echo ""
 }
 
-#Handle input arguments for the script
-function handle_arguments {
-    argument1=${1-default}
-    case $argument1 in
+#Handle input parameters for the script
+function handle_parameters {
+    parameter1=${1-default}
+    case $parameter1 in
         -h | --help )
             help
             exit 0;;                 
@@ -50,12 +43,12 @@ function handle_arguments {
 
 #Run main function as the main script flow
 function main {
-    handle_arguments $@
+    handle_parameters $@
     docker-compose -f "../docker-compose-postgres.yml" up -d --build
     sleep 1s
 
     # create database and seed data
-    docker exec -it postgres-db bash ./DatabaseScripts/Setup/CreateDatabase.sh $@
+    docker exec -it postgres-db bash ./DatabaseScripts/Setup/create_database.sh $@
 
     rm -r ~/PostgresPerformanceProject/DatabaseSetup/
     mkdir -p ~/PostgresPerformanceProject/DatabaseSetup/
