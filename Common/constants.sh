@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # used as replacement for echo /t has inconsistencies for different terminal clients app emulators
 readonly TAB="    " 
