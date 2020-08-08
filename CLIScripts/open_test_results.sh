@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env bash
 
 source ../Common/constants.sh
 source ../Common/default_script_setup.sh

@@ -12,10 +12,11 @@ The motivation was to test in PostgreSQL db how standard sql schema compares to 
 
 **Why?**
 
-Seeing multiple project going away from standard relational table design for multiple reasons I wanted to test the impact
-on some standard or often used queries.
+Seeing multiple project going away from standard relational table design for multiple reasons I wanted to test 
+the impact on some standard or often used queries.
 
-*As always my standard motivation behind this and any other project is as always to learn something and try things out.* 
+*As always my standard motivation behind this and any other project is as always to learn something 
+and try things out.* 
 
 ## Prerequisites
 
@@ -25,7 +26,15 @@ In order to run this project you need to have:
 - docker
 - docker-compose
 
-## Running the Project
+## Setup
+
+- Clone the repository to your machine
+- Setup Project. The project can be used or run from the CLIScripts folder directly but it is much easier 
+if you setup the ppt CLI (Postgres Performance test Command line interface). To do this you need to go
+the CLIScripts directory in the repository and run: `bash init_setup`
+
+It is important to run this command with your standard user and not with root(without sudo prefix on ubuntu)
+- View the ppt CLI help page: `ppt_help`
 
 ### How to run project
 
