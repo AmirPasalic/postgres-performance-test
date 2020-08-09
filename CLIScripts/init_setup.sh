@@ -40,11 +40,11 @@ function main {
     echo "" >> "$bash_aliases"
     echo "alias ppt_help=${cli_help_path}" >> "$bash_aliases"
 
-    exec bash
-    
     echo "Postgres Performance test project has been set up successfully."
-    echo "To view the CLI commands help page use the command: "
+    echo "To view the CLI commands help page use command: "
     echo "ppt_help"
+
+    exec bash
 }
 
 main $@

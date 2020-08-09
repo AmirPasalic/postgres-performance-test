@@ -40,8 +40,7 @@ function process_input_parameters {
         exit 1
     fi
 
-    if [ "$#" -eq 1 ] 
-    then
+    if [ "$#" -eq 1 ]; then
         handle_parameters $1
     fi
 }
