@@ -182,19 +182,19 @@ function create_execution_log_file {
     echo "" >> "$execution_log_file"
 }
 
-#Apply indexes to the database tables
+# Create a Indexes log file where information about indexes will be logged
+function create_indexes_log_file {
+    indexes_log_file="$LOGS_PATH/IndexesLog.txt"
+    touch "$indexes_log_file"
+    truncate -s 0 "$indexes_log_file"
+    echo "Indexes information Log file: " >> $indexes_log_file
+    echo "" >> "$indexes_log_file"
+}
+
+#Run apply indes which creates indexes
 function apply_indexes {
-    for i in "${query_results[@]}"
-        do
-            local current_file="$LOGS_PATH/$i"
-            print_to_execution_log_and_stdout "Applying indexes..."
-            
-            # bash "$apply_indexes_script"
-            echo "Applying Indexes Finished!" >> "$current_file"
-            
-            print_to_execution_log_and_stdout "Applying Indexes Finished!"
-        done
-        run_queries
+    bash "$apply_indexes_script"
+    print_to_execution_log_and_stdout "Indexes have been applied to the Tables."
 }
 
 #Prints finishing message after the execution of queries is finished
@@ -205,12 +205,23 @@ function print_summary_message {
     print_to_execution_log_and_stdout "For full results please view the log files."
     echo "The execution Log can be viwed at ~/PostgresPerformanceProject/PerformanceTestResults"
 }
+
+function print_indexes {
+    create_indexes_log_file
+
+    echo "Indexes created: " >> "$index_log_file"
+    echo "" >> "$index_log_file"
+
+    local indexes_information_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesInformation.sql
+    psql -d "$database" -f "$indexes_information_query" >> "$indexes_log_file"
+}
     
 #Run main function as the main script flow
 function main {
     # default value of query_run_counter is 1 and default value of with_indexes is false.
     local query_run_counter=1
     local with_indexes=false
+    database="CarReservationsDb"
     
     process_input_parameters $@
     readonly LOGS_PATH="/DatabaseScripts/PerformanceTestResults"
@@ -234,6 +245,8 @@ function main {
         echo "Applying Indexes: " >> $execution_log_file
         echo 'Applying indexes and re-running queries again, this could take a while as well...'
         apply_indexes
+        run_queries
+        print_indexes
     fi
 
     print_summary_message
