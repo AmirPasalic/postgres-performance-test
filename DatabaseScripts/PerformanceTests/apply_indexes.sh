@@ -19,6 +19,10 @@ function create_indexes {
     echo "Note: Indexes will only be created if they do not exist so far."
     echo "If they exist this step will be skipped..."
 
+    #create function
+    psql -d "$database" -f "$full_create_index_file_path"
+    
+    #call function
     psql -d "$database" -c "SELECT create_indexes()" -f "$full_create_index_file_path"
     echo "Index creation finished."
 }

@@ -88,6 +88,7 @@ function define_scripts {
     performanceTestScriptPath="/DatabaseScripts/PerformanceTests"
     readonly run_queries_script="$performanceTestScriptPath/run_queries.sh"
     readonly apply_indexes_script="$performanceTestScriptPath/apply_indexes.sh"
+    readonly remove_indexes_script="$performanceTestScriptPath/remove_indexes.sh"
 }
 
 #Define query and result log files
@@ -113,9 +114,19 @@ function print_queries {
             current_query_file="$QUERIES_PATH/$current_query_name"
             current_log_file="$LOGS_PATH/${query_results[i]}"
             echo "" >> "$current_log_file"
+            if [ "$print_indexes_applied" = true ]
+            then
+                echo "Database Indexes have been applied!!!" >> "$current_log_file"
+                echo "Repeate query runs after the indexes have been applied: " >> "$current_log_file"
+                echo "" >> "$current_log_file"
+                
+                
+            fi
             cat "$current_query_file" >> "$current_log_file"
             echo "" >> "$current_log_file"
         done
+        #We do not want the message: 'Database Indexes have been applied' to be printed multiple times
+        print_indexes_applied=false
 }
 
 #Running queries
@@ -123,7 +134,7 @@ function run_queries {
     # initial print of queries to log files
     print_queries "${sql_quries[@]}"
 
-    # run queries based on input counter
+    # run queries based on input counter(how many times it should re-run)
     for i in $(seq 1 $query_run_counter); do
         # print intital message about query run count to result log files
         print_to_execution_log_and_stdout "Query run number $i for SQL queries is running:"
@@ -143,7 +154,7 @@ function run_queries {
     # initial print of queries to log files
     print_queries "${jsonb_quries[@]}"
 
-    # run queries based on input counter
+    # run queries based on input counter(how many times it should re-run)
     for i in $(seq 1 $query_run_counter); do
         # print intital message about query run count to result log files 
         print_to_execution_log_and_stdout "Query run number $i for JSONB queries is running:"
@@ -194,7 +205,14 @@ function create_indexes_log_file {
 #Run apply indes which creates indexes
 function apply_indexes {
     bash "$apply_indexes_script"
+    print_indexes_applied=true
     print_to_execution_log_and_stdout "Indexes have been applied to the Tables."
+    print_to_execution_log_and_stdout "The queries will run again:"
+}
+
+function remove_indexes {
+    bash "$remove_indexes_script"
+    print_to_execution_log_and_stdout "Indexes have been removed(cleaned up) from the Tables."
 }
 
 #Prints finishing message after the execution of queries is finished
@@ -209,8 +227,8 @@ function print_summary_message {
 function print_indexes {
     create_indexes_log_file
 
-    echo "Indexes created: " >> "$index_log_file"
-    echo "" >> "$index_log_file"
+    echo "Indexes created: " >> "$indexes_log_file"
+    echo "" >> "$indexes_log_file"
 
     local indexes_information_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesInformation.sql
     psql -d "$database" -f "$indexes_information_query" >> "$indexes_log_file"
@@ -221,6 +239,7 @@ function main {
     # default value of query_run_counter is 1 and default value of with_indexes is false.
     local query_run_counter=1
     local with_indexes=false
+    local print_indexes_applied=false
     database="CarReservationsDb"
     
     process_input_parameters $@
@@ -242,11 +261,12 @@ function main {
     
     if [ "$with_indexes" = true ]
     then
-        echo "Applying Indexes: " >> $execution_log_file
-        echo 'Applying indexes and re-running queries again, this could take a while as well...'
+        print_to_execution_log_and_stdout "Applying Indexes..."
+        print_to_execution_log_and_stdout "Applying indexes and re-running queries again, this could take a while..."
         apply_indexes
         run_queries
         print_indexes
+        remove_indexes
     fi
 
     print_summary_message

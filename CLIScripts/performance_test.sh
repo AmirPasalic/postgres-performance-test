@@ -58,7 +58,7 @@ function main {
     # run queries on schemas
     docker exec -it postgres-db bash ./DatabaseScripts/PerformanceTests/run_performance_test.sh "$@"
 
-    rm -r ~/PostgresPerformanceProject/PerformanceTestResults
+    rm -rf ~/PostgresPerformanceProject/PerformanceTestResults/
     mkdir -p ~/PostgresPerformanceProject/PerformanceTestResults
     
     # copy performance test results to host machine
