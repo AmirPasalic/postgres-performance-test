@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source /Common/default_script_setup.sh
+source /DatabaseScripts/Common/execution_log_helpers.sh
 
 #Process input parameters for this script
 function process_input_parameters {
@@ -10,21 +11,22 @@ function process_input_parameters {
     fi
 }
 
+#Creates all indexes for all tables CarReservationsDb
 function create_indexes {
     local full_create_index_file_path="/DatabaseScripts/PerformanceTests/Indexes/CreateIndexes.sql"
     local database="CarReservationsDb"
 
-    echo "Applying Indexes"
-    echo "Index creation started..."
-    echo "Note: Indexes will only be created if they do not exist so far."
-    echo "If they exist this step will be skipped..."
+    print_to_execution_log_and_stdout "Applying Indexes"
+    print_to_execution_log_and_stdout "Index creation started..."
+    print_to_execution_log_and_stdout "Note: Indexes will only be created if they do not exist so far."
+    print_to_execution_log_and_stdout "If they exist this step will be skipped..."
 
-    #create function
+    #create db function in Postgresql
     psql -d "$database" -f "$full_create_index_file_path"
     
-    #call function
+    #call db function in Postgresql
     psql -d "$database" -c "SELECT create_indexes()" -f "$full_create_index_file_path"
-    echo "Index creation finished."
+    print_to_execution_log_and_stdout "Index creation finished."
 }
 
 #Run main function as the main script flow

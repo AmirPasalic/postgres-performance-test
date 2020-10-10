@@ -2,6 +2,7 @@
 
 source /Common/default_script_setup.sh
 source /Common/constants.sh
+source /DatabaseScripts/Common/execution_log_helpers.sh
 
 #Handle input parameters
 function handle_parameters {
@@ -69,18 +70,6 @@ function process_input_parameters {
     then
         handle_parameters $1 $2 $3
     fi
-}
-
-#Will print given message to ExecutionLog.txt and to stdout of current execution terminal
-function print_to_execution_log_and_stdout {
-    current_message=$1
-    if [ "$current_message" != "" ]
-    then
-        timeStamp=$(date '+%F %T.%3N') #timestamp with miliseconds precision
-        current_message="$timeStamp: ${current_message}"
-    fi
-    echo "$current_message" >> "$execution_log_file"
-    echo "$current_message"
 }
 
 #Define scriptFile path variables
@@ -184,24 +173,6 @@ function create_test_result_log_files {
     done
 }
 
-# Create a general log file where execution logs will be logged
-function create_execution_log_file {
-    execution_log_file="$LOGS_PATH/ExecutionLog.txt"
-    touch "$execution_log_file"
-    truncate -s 0 "$execution_log_file"
-    echo "Execution Log for performance test: " >> $execution_log_file
-    echo "" >> "$execution_log_file"
-}
-
-# Create a Indexes log file where information about indexes will be logged
-function create_indexes_log_file {
-    indexes_log_file="$LOGS_PATH/IndexesLog.txt"
-    touch "$indexes_log_file"
-    truncate -s 0 "$indexes_log_file"
-    echo "Indexes information Log file: " >> $indexes_log_file
-    echo "" >> "$indexes_log_file"
-}
-
 #Run apply indes which creates indexes
 function apply_indexes {
     bash "$apply_indexes_script"
@@ -218,20 +189,17 @@ function remove_indexes {
 #Prints finishing message after the execution of queries is finished
 function print_summary_message {
     print_to_execution_log_and_stdout "Running quries finished!"
-    print_to_execution_log_and_stdout ""
-
     print_to_execution_log_and_stdout "For full results please view the log files."
     echo "The execution Log can be viwed at ~/PostgresPerformanceProject/PerformanceTestResults"
 }
 
 function print_indexes {
     create_indexes_log_file
-
-    echo "Indexes created: " >> "$indexes_log_file"
-    echo "" >> "$indexes_log_file"
+    print_to_indexes_log_file_and_stdout "Indexes created: "
+    print_to_indexes_log_file_and_stdout ""
 
     local indexes_information_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesInformation.sql
-    psql -d "$database" -f "$indexes_information_query" >> "$indexes_log_file"
+    psql -d "$database" -f "$indexes_information_query" >> "$INDEXES_LOG_FILE"
 }
     
 #Run main function as the main script flow
@@ -243,8 +211,6 @@ function main {
     database="CarReservationsDb"
     
     process_input_parameters $@
-    readonly LOGS_PATH="/DatabaseScripts/PerformanceTestResults"
-    readonly QUERIES_PATH="/DatabaseScripts/PerformanceTests/Queries"
     define_scripts
     
     local query_results
@@ -253,8 +219,8 @@ function main {
     local jsonb_quries
 
     define_files query_results quries sql_quries jsonb_quries
-    create_test_result_log_files
     create_execution_log_file
+    create_test_result_log_files
 
     print_to_execution_log_and_stdout "Starting execution of queries. This could take a while..."
     run_queries
