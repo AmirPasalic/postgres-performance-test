@@ -8,4 +8,4 @@
 EXPLAIN ANALYZE
 SELECT *
 FROM jsonb_cars
-WHERE (data ->> 'model')::VARCHAR = 'X5';
+WHERE (data -> 'model')::VARCHAR = 'X5';

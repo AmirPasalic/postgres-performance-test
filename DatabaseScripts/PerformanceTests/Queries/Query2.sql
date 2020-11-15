@@ -1,12 +1,13 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Query 2
--- Select all from Cars table where the model is 'X1'
--- or model is X3 or model is X5.
+-- Query 1
+-- Select all from Cars table where the model is 'X5'.
+-- and
+-- car is used.
 -- Standard SQL
 
 EXPLAIN ANALYSE  
 SELECT *
-FROM cars
-WHERE model = 'X1' OR model = 'X3' OR model = 'X5';
+FROM "CarReservationsDb"."public"."cars"
+WHERE model = 'X5' AND is_used;
