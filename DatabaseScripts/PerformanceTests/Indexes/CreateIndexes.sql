@@ -10,16 +10,16 @@ BEGIN
     cars_brand_index 
     ON cars USING HASH(brand);
     
-    -- Create BTree partial Index for cars table
-    -- on brand column and is_used
+    -- Create Hash Partial Index for cars table
+    -- on brand column and partial on condition 
+    -- is_used
 	CREATE INDEX IF NOT EXISTS 
     cars_brand_is_used_index 
     ON cars USING HASH(brand)
     WHERE is_used = true;
 
     -- Create BTree Expression Index for jsonb_cars table
-    -- on brand column, and partial on condition
-    -- column data
+    -- on brand column
     CREATE INDEX IF NOT EXISTS 
     jsonb_cars_brand_index 
     ON jsonb_cars USING BTREE (((data -> 'brand')::VARCHAR));
@@ -34,55 +34,52 @@ BEGIN
 
     -- Create GIN Index for jsonb_cars table
     -- on data JSONB column
-    -- column data
     CREATE INDEX IF NOT EXISTS 
     jsonb_cars_data_gin_index 
     ON jsonb_cars USING GIN(data);
 
-    -- Create BTree cars table
+    -- Create BTree Index for cars table
     -- on model column
     CREATE INDEX IF NOT EXISTS 
     cars_model_index 
     ON cars USING BTREE(model);
 
-    -- Create BTree/Partial index on cars table
+    -- Create BTree/Partial Index for cars table
     -- on model column, and partial on condition
+    -- is_used
     CREATE INDEX IF NOT EXISTS 
     cars_model_is_used_index 
     ON cars USING BTREE(model)
     WHERE is_used = true;
 
-    -- Create BTree/Partial Index on cars table
-    -- on model column and partial condition 
-    -- is_used = true
+    -- Create BTree Expression Index on cars table
+    -- on model column
     CREATE INDEX IF NOT EXISTS 
-    jsonb_cars_model_is_used_index  
-    ON jsonb_cars USING BTREE (((data -> 'model')::VARCHAR))
-    WHERE is_used = true;
+    jsonb_cars_model_index  
+    ON jsonb_cars USING BTREE (((data -> 'model')::VARCHAR));
 
     -- Create BTree Expression Index for jsonb_cars table
     -- on model column, and partial on condition
     CREATE INDEX IF NOT EXISTS 
-    cars_model_partial_index 
+    jsonb_cars_model_is_used_index 
     ON jsonb_cars USING BTREE (((data -> 'model')::VARCHAR))
-    WHERE is_used = true;
+    WHERE (((data -> 'is_used')::BOOLEAN)) = true;
 
-    -- Create BTree index on customers table
-    -- on model column
+    -- Create BTree Index on customers table
+    -- on customer_address column
     CREATE INDEX IF NOT EXISTS 
     customers_address_index 
     ON customers USING BTREE(customer_address);
 
-    -- Create BTree/Partial index on customers table
-    -- on model column, and partial on condition
+    -- Create BTree Partial Index on customers table
+    -- on customer_address column, and partial on condition
     -- is premimum
-    -- Create Index for customers table
     CREATE INDEX IF NOT EXISTS 
     customers_address_is_premium_index 
     ON customers USING BTREE(customer_address)
     WHERE is_premium = true;
 
-    -- Create BTree/Expression index on jsonb_customers table
+    -- Create BTree/Expression Index on jsonb_customers table
     -- on customer_address expression
     CREATE INDEX IF NOT EXISTS 
     jsonb_customers_address_index 
@@ -94,23 +91,29 @@ BEGIN
     CREATE INDEX IF NOT EXISTS 
     jsonb_customers_address_is_premium_index 
     ON jsonb_customers USING BTREE(((data -> 'customer_address')::VARCHAR))
-    WHERE is_premium = true;
+    WHERE (((data -> 'is_premium')::BOOLEAN)) = true;
 
-    -- Create BTree/Partial index on car_reservations table
-    -- on model column, and partial on condition
+    -- Create BTree Partial Index on car_reservations table
+    -- on start_date column, and partial on condition
     -- is is_deleted = false
     CREATE INDEX IF NOT EXISTS 
     car_reservations_start_date_index 
     ON car_reservations USING BTREE(start_date)
     WHERE is_deleted = false;
      
-    -- Create BTree/Expression/Partial index on jsonb_car_reservations table
+    -- Create BTree Expression/Partial index on jsonb_car_reservations table
     -- on start_date expression and partial on condition
     -- is is_deleted = false
     CREATE INDEX IF NOT EXISTS 
     jsonb_car_reservations_start_date_index 
     ON jsonb_car_reservations (((data -> 'start_date')::TEXT))
-    WHERE is_deleted = false;
+    WHERE (((data -> 'is_deleted')::BOOLEAN)) = false;
         
+    -- Create BRIN Index on car_reservations table
+    -- on start_date column
+    CREATE INDEX IF NOT EXISTS 
+    car_reservations_start_date__brin_index 
+    ON car_reservations USING BRIN(start_date);
+
 END;
 $func$ LANGUAGE plpgsql;

@@ -2,7 +2,7 @@
 ------------------------------------------------------------
 
 -- Query 4
--- Select all Cars where a Reservation exists
+-- Select all cars where a Reservation exists
 -- Standard SQL
 
 EXPLAIN ANALYSE  

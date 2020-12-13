@@ -2,7 +2,7 @@
 ------------------------------------------------------------
 
 -- Query 1
--- Select all from Cars table where the model is 'X5'
+-- Select all from cars table where the model is 'X5'
 -- Standard SQL
 
 EXPLAIN ANALYSE  

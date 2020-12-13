@@ -1,10 +1,9 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Query 1
--- Select all from Cars table where the model is 'X5'.
--- and
--- car is used.
+-- Query 2
+-- Select all from cars table where the model is 'X5'
+-- and car is used.
 -- Standard SQL
 
 EXPLAIN ANALYSE  

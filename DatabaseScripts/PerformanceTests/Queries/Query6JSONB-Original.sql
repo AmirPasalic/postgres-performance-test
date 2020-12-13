@@ -4,8 +4,9 @@
 -- Query 6
 -- Select all car_reservatins with customer and car information 
 -- which have car_reservations between tomorrow and next 7 days. 
--- The cusomer_address of the customer should be equal to 'Hamburg' and 
+-- The first_name of the customer should be equal to 'Max' and 
 -- the customer has reserved a car with brand VW and model Touareg.
+-- The car_reservation should not be marked as deleted.
 -- JSONB
 
 EXPLAIN ANALYSE
@@ -23,7 +24,7 @@ FROM (
 	  (data ->> 'car_id')::INTEGER AS car_id,
   	(data ->> 'customer_id')::INTEGER AS customer_id,
 	  (data ->> 'start_date')::DATE AS start_date,
-	  (data ->> 'end_date')::DATE AS end_date,
+	  (data ->> 'end_date')::DATE AS end_date
     (data ->> 'is_deleted')::BOOLEAN AS is_deleted
   FROM jsonb_car_reservations
 ) tmp_jsonb_car_reservations
@@ -37,10 +38,7 @@ WHERE
                 AND	
             (SELECT (SELECT NOW() + INTERVAL '7 DAY')::DATE) 
     ) AND
-    (ca.data -> 'brand')::VARCHAR = 'VW' AND
-    (ca.data -> 'model')::VARCHAR = 'Touareg' AND
-    (cus.data -> 'customer_address')::VARCHAR = 'Hamburg' AND
-    tmp_jsonb_car_reservations.is_deleted = false; 
-    -- We can not do anything about this condition "tmp_jsonb_car_reservations.is_deleted"
-    -- Probably here we can not do anything as we to join on a column 
-    -- which is inside of JSONB object which we extracted to temp table
+    ca.data ->> 'brand' = 'VW' AND 
+    ca.data ->> 'model' = 'Touareg' AND
+    cus.data ->> 'first_name' = 'Max'  AND
+    tmp_jsonb_car_reservations.is_deleted = false;
