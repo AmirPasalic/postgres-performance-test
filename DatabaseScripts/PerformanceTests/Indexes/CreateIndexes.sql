@@ -7,17 +7,9 @@ BEGIN
 	-- Create Hash Index for cars table
     -- on brand column
 	CREATE INDEX IF NOT EXISTS 
-    cars_brand_index 
+    cars_brand_hash_index 
     ON cars USING HASH(brand);
     
-    -- Create Hash Partial Index for cars table
-    -- on brand column and partial on condition 
-    -- is_used
-	CREATE INDEX IF NOT EXISTS 
-    cars_brand_is_used_index 
-    ON cars USING HASH(brand)
-    WHERE is_used = true;
-
     -- Create BTree Expression Index for jsonb_cars table
     -- on brand column
     CREATE INDEX IF NOT EXISTS 
@@ -109,11 +101,17 @@ BEGIN
     ON jsonb_car_reservations (((data -> 'start_date')::TEXT))
     WHERE (((data -> 'is_deleted')::BOOLEAN)) = false;
         
-    -- Create BRIN Index on car_reservations table
-    -- on start_date column
+    -- Create BTree Index on car_reservations table
+    -- on car_id column
     CREATE INDEX IF NOT EXISTS 
-    car_reservations_start_date__brin_index 
-    ON car_reservations USING BRIN(start_date);
+    car_reservations_car_id_index 
+    ON car_reservations USING BTREE(car_id); --car_id and customer_id
+
+    -- Create BTree Index on car_reservations table
+    -- on customer_id column
+    CREATE INDEX IF NOT EXISTS 
+    car_reservations_customer_id_index
+    ON car_reservations USING BTREE(customer_id);
 
 END;
 $func$ LANGUAGE plpgsql;

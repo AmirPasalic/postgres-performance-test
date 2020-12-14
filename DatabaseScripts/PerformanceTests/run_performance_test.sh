@@ -87,10 +87,10 @@ function define_files {
     local -n current_sql_quries=$3
     local -n current_jsonb_quries=$4
 
-    current_query_results=("Query1Log.txt" "Query2Log.txt" "Query3Log.txt" "Query4Log.txt" "Query5Log.txt" "Query6Log.txt" "Query7Log.txt" "Query8Log.txt" "Query9Log.txt" "Query10Log.txt")
-    current_quries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7" "Query8" "Query9" "Query10")
-    current_sql_quries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql" "Query8.sql" "Query9.sql" "Query10.sql")
-    current_jsonb_quries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql" "Query8JSONB.sql" "Query9JSONB.sql" "Query10JSONB.sql")
+    current_query_results=("Query1Log.txt" "Query2Log.txt" "Query3Log.txt" "Query4Log.txt" "Query5Log.txt" "Query6Log.txt" "Query7Log.txt" "Query8Log.txt" "Query9Log.txt" "Query10Log.txt" "Query11Log.txt")
+    current_quries=("Query1" "Query2" "Query3" "Query4" "Query5" "Query6" "Query7" "Query8" "Query9" "Query10" "Query11")
+    current_sql_quries=("Query1.sql" "Query2.sql" "Query3.sql" "Query4.sql" "Query5.sql" "Query6.sql" "Query7.sql" "Query8.sql" "Query9.sql" "Query10.sql" "Query11.sql")
+    current_jsonb_quries=("Query1JSONB.sql" "Query2JSONB.sql" "Query3JSONB.sql" "Query4JSONB.sql" "Query5JSONB.sql" "Query6JSONB.sql" "Query7JSONB.sql" "Query8JSONB.sql" "Query9JSONB.sql" "Query10JSONB.sql" "Query11JSONB.sql")
 }
 
 #Initial printing of queries to result Log files
