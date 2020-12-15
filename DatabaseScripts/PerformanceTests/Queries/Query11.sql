@@ -1,11 +1,11 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Query 1
--- Select all from cars table where the model is 'X5'
+-- Query 11
+-- Select all from cars table where the brad is 'VW'
 -- Standard SQL
 
 EXPLAIN ANALYSE  
 SELECT *
 FROM "CarReservationsDb"."public"."cars"
-WHERE model = 'X5';
+WHERE brand = 'VW';

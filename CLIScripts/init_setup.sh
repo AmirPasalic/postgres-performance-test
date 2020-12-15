@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -x;
 shopt -s expand_aliases
 
 function main {
@@ -40,6 +39,10 @@ function main {
     echo "alias ppt_stop_db=${stop_db_path}" >> "$bash_aliases"
     echo "" >> "$bash_aliases"
     echo "alias ppt_help=${cli_help_path}" >> "$bash_aliases"
+
+    echo "Postgres Performance test project has been set up successfully."
+    echo "To view the CLI commands help page use command: "
+    echo "ppt_help"
 
     exec bash
 }

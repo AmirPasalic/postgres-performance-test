@@ -4,8 +4,9 @@
 -- Query 6
 -- Select all car_reservatins with customer and car information 
 -- which have car_reservations between tomorrow and next 7 days. 
--- The first_name of the customer should be equal to 'Max' and 
+-- The city address of the customer should be equal to 'Hamburg' and 
 -- the customer has reserved a car with brand VW and model Touareg.
+-- The car_reservation should not be marked as deleted.
 -- Standard SQL
 
 EXPLAIN ANALYSE
@@ -22,4 +23,5 @@ WHERE
     ) AND
     ca.brand = 'VW' AND 
     ca.model = 'Touareg' AND
-    cus.first_name = 'Max';
+    cus.customer_address = 'Hamburg' AND
+    cr.is_deleted = false;

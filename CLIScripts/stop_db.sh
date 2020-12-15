@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
-source ../Common/constants.sh
-source ../Common/default_script_setup.sh
+#Define constants used in this script
+function define_constants {
+    readonly SCRIPT_DIRRECTORY_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+    readonly PROJECT_MAIN_DIR_PATH="$(dirname "$SCRIPT_DIRRECTORY_PATH")"
+    source "$PROJECT_MAIN_DIR_PATH/Common/constants.sh"
+    source "$PROJECT_MAIN_DIR_PATH/Common/default_script_setup.sh"
+}
 
 #Show help for the command
 function help {
@@ -50,9 +55,10 @@ function process_input_parameters {
 
 #Run main function as the main script flow
 function main {
+    define_constants
     process_input_parameters $@
     # stop containers
-    docker-compose -f "../docker-compose-postgres.yml" stop
+    docker-compose -f "$PROJECT_MAIN_DIR_PATH/docker-compose-postgres.yml" stop
 }
 
 main $@

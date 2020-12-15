@@ -1,11 +1,11 @@
 ------------------------------------------------------------
 ------------------------------------------------------------
 
--- Query 1
--- Select all from cars table where the model is 'X5'.
+-- Query 11
+-- Select all from cars table where the brand is 'VW'.
 -- JSONB
 
 EXPLAIN ANALYZE
 SELECT *
 FROM jsonb_cars
-WHERE (data -> 'model')::VARCHAR = 'X5';
+WHERE (data -> 'brand')::VARCHAR = 'VW';

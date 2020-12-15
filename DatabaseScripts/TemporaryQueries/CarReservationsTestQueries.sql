@@ -55,3 +55,14 @@ BEGIN
 		RETURN analyzeResult;
 END;
 $func$ LANGUAGE plpgsql;
+
+
+------------------------
+
+SELECT * FROM pg_class
+
+select name, setting from pg_settings where name = 'autovacuum';
+
+SELECT relname, relkind, reltuples, relpages
+FROM pg_class
+--ERE relname LIKE 'tenk1%';

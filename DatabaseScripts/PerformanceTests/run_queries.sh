@@ -48,6 +48,10 @@ function main {
     run_qeury "Query5" "$schema"
     run_qeury "Query6" "$schema"
     run_qeury "Query7" "$schema"
+    run_qeury "Query8" "$schema"
+    run_qeury "Query9" "$schema"
+    run_qeury "Query10" "$schema"
+    run_qeury "Query11" "$schema"
 }
 
 main $@
