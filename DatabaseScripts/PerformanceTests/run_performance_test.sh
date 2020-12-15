@@ -193,13 +193,68 @@ function print_summary_message {
     echo "The execution Log can be viwed at ~/PostgresPerformanceProject/PerformanceTestResults"
 }
 
-function print_indexes {
-    create_indexes_log_file
-    print_to_indexes_log_file_and_stdout "Indexes created: "
-    print_to_indexes_log_file_and_stdout ""
+#Prints database information like dabase size and table sizes
+function print_database_info {
+    create_database_info_log_file
+    print_to_database_info_log_file_and_stdout "Database information logged to DatabaseInfoLog.txt file."
+    print_to_database_info_log_file_and_stdout ""
 
+    #1. Get Databas Size
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    echo "Database size is: " >> "$DATABASE_INFO_LOG_FILE"
+    local get_database_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetDatabasSize.sql
+    psql -d "$database" -f "$get_database_size_query" >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+
+    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+
+    #2. Get Table Size
+    local get_table_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableSizes.sql
+    psql -d "$database" -f "$get_table_size_query" >> "$DATABASE_INFO_LOG_FILE"
+
+    #3.
+    ## Get table statistics
+}
+
+#Prints database information like dabase size, table sizes and index sizes
+function print_database_info_with_indexes {
+    create_database_info_log_file
+    print_to_database_info_log_file_and_stdout "Database information logged to DatabaseInfoLog.txt file."
+    print_to_database_info_log_file_and_stdout ""
+
+    #1. GetDatabaseSize.sql
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    echo "Database size is: " >> "$DATABASE_INFO_LOG_FILE"
+    local get_database_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetDatabaseSize.sql
+    psql -d "$database" -f "$get_database_size_query" >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+
+    #2. GetIndexInformation.sql
+    echo "Indexes information: " >> "$DATABASE_INFO_LOG_FILE"
     local indexes_information_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesInformation.sql
-    psql -d "$database" -f "$indexes_information_query" >> "$INDEXES_LOG_FILE"
+    psql -d "$database" -f "$indexes_information_query" >> "$DATABASE_INFO_LOG_FILE"
+
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+
+    #3. GetIndexDefintion.sql
+    echo "Indexes definition: " >> "$DATABASE_INFO_LOG_FILE"
+    local get_indexes_definition_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesDefinition.sql
+    psql -d "$database" -f "$get_indexes_definition_query" >> "$DATABASE_INFO_LOG_FILE"
+    
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+
+    #4. GetTableAndIndexesSize.sql
+    echo "Table and index sizes: " >> "$DATABASE_INFO_LOG_FILE"
+    local get_table_and_indexes_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableAndIndexesSize.sql
+    psql -d "$database" -f "$get_table_and_indexes_size_query" >> "$DATABASE_INFO_LOG_FILE"
+
+    #5.
+    ## Get table statistics
 }
     
 #Run main function as the main script flow
@@ -208,6 +263,7 @@ function main {
     local query_run_counter=1
     local with_indexes=false
     local print_indexes_applied=false
+    local insert_text_separator_script="/DatabaseScripts/PerformanceTests/insert_text_separator.sh"
     database="CarReservationsDb"
     
     process_input_parameters $@
@@ -231,8 +287,10 @@ function main {
         print_to_execution_log_and_stdout "Applying indexes and re-running queries again, this could take a while..."
         apply_indexes
         run_queries
-        print_indexes
+        print_database_info_with_indexes
         remove_indexes
+    else
+        print_database_info
     fi
 
     print_summary_message

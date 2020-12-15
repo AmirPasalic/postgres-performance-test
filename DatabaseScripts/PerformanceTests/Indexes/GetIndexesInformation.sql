@@ -1,3 +1,4 @@
+-- Get basic Indexes information
 SELECT
     t.relname AS table_name,
     i.relname AS index_name,
