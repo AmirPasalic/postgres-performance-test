@@ -107,9 +107,7 @@ function print_queries {
             then
                 echo "Database Indexes have been applied!!!" >> "$current_log_file"
                 echo "Repeate query runs after the indexes have been applied: " >> "$current_log_file"
-                echo "" >> "$current_log_file"
-                
-                
+                echo "" >> "$current_log_file"   
             fi
             cat "$current_query_file" >> "$current_log_file"
             echo "" >> "$current_log_file"
@@ -260,8 +258,7 @@ function print_database_info_with_indexes {
 
     print_empty_line_and_text_separator
 
-    #4.
-    #Get Table statistics
+    #4. Get Table statistics
     echo "Table statistics: " >> "$DATABASE_INFO_LOG_FILE"
     echo "" >> "$DATABASE_INFO_LOG_FILE"
     local get_table_statistics_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableStatistics.sql
