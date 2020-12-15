@@ -4,7 +4,7 @@
 -- Query 6
 -- Select all car_reservatins with customer and car information 
 -- which have car_reservations between tomorrow and next 7 days. 
--- The cusomer_address of the customer should be equal to 'Hamburg' and 
+-- The customer_address of the customer should be equal to 'Hamburg' and 
 -- the customer has reserved a car with brand VW and model Touareg.
 -- JSONB
 

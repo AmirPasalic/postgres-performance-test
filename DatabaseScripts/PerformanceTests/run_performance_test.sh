@@ -193,28 +193,40 @@ function print_summary_message {
     echo "The execution Log can be viwed at ~/PostgresPerformanceProject/PerformanceTestResults"
 }
 
+function print_empty_line_and_text_separator {
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+}
+
 #Prints database information like dabase size and table sizes
 function print_database_info {
     create_database_info_log_file
     print_to_database_info_log_file_and_stdout "Database information logged to DatabaseInfoLog.txt file."
     print_to_database_info_log_file_and_stdout ""
 
-    #1. Get Databas Size
+    #1. Get Databas size
     echo "" >> "$DATABASE_INFO_LOG_FILE"
     echo "Database size is: " >> "$DATABASE_INFO_LOG_FILE"
-    local get_database_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetDatabasSize.sql
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    local get_database_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetDatabaseSize.sql
     psql -d "$database" -f "$get_database_size_query" >> "$DATABASE_INFO_LOG_FILE"
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    
+    print_empty_line_and_text_separator
 
-    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
+    #2. Get table size
+    echo "Table sizes: " >> "$DATABASE_INFO_LOG_FILE"
     echo "" >> "$DATABASE_INFO_LOG_FILE"
-
-    #2. Get Table Size
     local get_table_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableSizes.sql
     psql -d "$database" -f "$get_table_size_query" >> "$DATABASE_INFO_LOG_FILE"
 
-    #3.
-    ## Get table statistics
+    print_empty_line_and_text_separator
+
+    #3. Get table statistics
+    echo "Table statistics: " >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    local get_table_statistics_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableStatistics.sql
+    psql -d "$database" -f "$get_table_statistics_query" >> "$DATABASE_INFO_LOG_FILE"
 }
 
 #Prints database information like dabase size, table sizes and index sizes
@@ -223,38 +235,37 @@ function print_database_info_with_indexes {
     print_to_database_info_log_file_and_stdout "Database information logged to DatabaseInfoLog.txt file."
     print_to_database_info_log_file_and_stdout ""
 
-    #1. GetDatabaseSize.sql
+    #1. Get Database size
     echo "" >> "$DATABASE_INFO_LOG_FILE"
     echo "Database size is: " >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
     local get_database_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetDatabaseSize.sql
     psql -d "$database" -f "$get_database_size_query" >> "$DATABASE_INFO_LOG_FILE"
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    
+    print_empty_line_and_text_separator
 
-    #2. GetIndexInformation.sql
-    echo "Indexes information: " >> "$DATABASE_INFO_LOG_FILE"
-    local indexes_information_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesInformation.sql
-    psql -d "$database" -f "$indexes_information_query" >> "$DATABASE_INFO_LOG_FILE"
-
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
-    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
-
-    #3. GetIndexDefintion.sql
+    #2. Get Index defintion
     echo "Indexes definition: " >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
     local get_indexes_definition_query=/DatabaseScripts/PerformanceTests/Indexes/GetIndexesDefinition.sql
     psql -d "$database" -f "$get_indexes_definition_query" >> "$DATABASE_INFO_LOG_FILE"
     
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
-    bash "$insert_text_separator_script" "$DATABASE_INFO_LOG_FILE"
-    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    print_empty_line_and_text_separator
 
-    #4. GetTableAndIndexesSize.sql
+    #3. Get Table and Indexes sizes
     echo "Table and index sizes: " >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
     local get_table_and_indexes_size_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableAndIndexesSize.sql
     psql -d "$database" -f "$get_table_and_indexes_size_query" >> "$DATABASE_INFO_LOG_FILE"
 
-    #5.
-    ## Get table statistics
+    print_empty_line_and_text_separator
+
+    #4.
+    #Get Table statistics
+    echo "Table statistics: " >> "$DATABASE_INFO_LOG_FILE"
+    echo "" >> "$DATABASE_INFO_LOG_FILE"
+    local get_table_statistics_query=/DatabaseScripts/PerformanceTests/Indexes/GetTableStatistics.sql
+    psql -d "$database" -f "$get_table_statistics_query" >> "$DATABASE_INFO_LOG_FILE"
 }
     
 #Run main function as the main script flow
