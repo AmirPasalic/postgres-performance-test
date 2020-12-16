@@ -25,6 +25,7 @@ Here are some table examples:
 \
 **Table: cars**
 &nbsp;
+
 Columns | id | brand | model | company_name | is_used 
 --- | --- | --- | --- |--- |--- |---
 ... | 1 | BMW | X1 | Bayerische Motoren Werke AG | true
@@ -35,6 +36,7 @@ Columns | id | brand | model | company_name | is_used
 \
 **Table: jsonb_cars**
 &nbsp;
+
 Columns | id | datas
 --- | --- | --- | --- 
 ... | 1 | { "brand": "BMW", "model": "X1", "is_used": true, "company_name": "Bayerische Motoren Werke AG"}
