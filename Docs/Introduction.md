@@ -25,27 +25,23 @@ Here are some table examples:
 \
 Table: cars
 
-|Columns | id | brand | model | company_name | is_used|
-|--- | --- | --- | --- |--- |--- |---|
-|... | 1 | BMW | X1 | Bayerische Motoren Werke AG | true|
-|... | 2 | VW | Passat | Volkswagen AG | true|
-|... | 3 | Mercedes-Benz | GLE | Daimler AG | true|
-|... | ... | ... | ... | ... | ...|
+| Columns | id | brand | model | company_name | is_used |
+| --- | --- | --- | --- |--- |--- |
+| ... | 1 | BMW | X1 | Bayerische Motoren Werke AG | true |
+| ... | 2 | VW | Passat | Volkswagen AG | true |
+| ... | 3 | Mercedes-Benz | GLE | Daimler AG | true |
+| ... | ... | ... | ... | ... | ... |
 
-
-Test
 \
 \
 Table: jsonb_cars
 
 | Columns | id | datas |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | ... | 1 | { "brand": "BMW", "model": "X1", "is_used": true, "company_name": "Bayerische Motoren Werke AG"} |
 | ... | 2 | { "brand": "VW", "model": "Passat", "is_used": true, "company_name": "Volkswagen AG"} |
 | ... | 3 | { "brand": "Mercedes-Benz", "model": "GLE", "is_used": true, "company_name": "Daimler AG"} |
 | ... | ... | ... | ... |
-
-Test
 
 \
 As you can see from the example the data which is stored in the cars and jsonb_cars is the same. It is
@@ -62,4 +58,3 @@ In order to see the Disclaimer for the test data please view section [Disclaimer
 
 ## Setup the Database and Performance test
 In order to understand how the performance_tests is run please read the Docs section for [Setup](Setup.md).
-

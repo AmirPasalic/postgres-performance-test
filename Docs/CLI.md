@@ -1,6 +1,6 @@
 ## CLI Introduction
 This project has its own CLI which helps in automating task like: setup db, run performance test, 
-open test results cleanup db and env and so on. The CLI is supposed to used to fully run and 
+open test results, cleanup db and env and so on. The CLI is supposed to used to fully run and 
 test the queries and the impact.
 
 ## ppt CLI
