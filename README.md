@@ -20,13 +20,16 @@ Databases like MongoDb or ElasticSearch) or even an Hybrid SQL/Document based de
 and try things out.* 
 
 ## Where to start?
-Here is a list of all Docs related to this projects.
+The Docs related to this project have all the details and examples in order to 
+understand the Model and examples, setup the test db and run some test runs or 'Labs'
+to see the results. Below is a list of all Docs related to this projects. Reading and following
+those will give you a good overview how to run the performance test.
 \
 Information and docummentation:
 - [Introduction](Docs/Introduction.md)
 - [Setup](Docs/Setup.md)
 - [CLI](Docs/CLI.md)
-- [Disclaimer](Disclaimer.md)
+- [Disclaimer](DISCLAIMER.md)
 - Labs
     - [Lab1](Lab1.md)
     - [Lab2](Lab2.md)

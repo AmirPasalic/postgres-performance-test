@@ -54,7 +54,7 @@ holds the information which cusomer did a car reservation, for which car, for wh
 and at which time it was created. For this model we have 3 tables: cars, customers and car_reservations.
 
 ## Disclaimer
-In order to see the Disclaimer for the test data please view section [Disclaimer](../Disclaimer.md)
+In order to see the Disclaimer for the test data please view section [Disclaimer](../DISCLAIMER.md)
 
 ## Setup the Database and Performance test
 In order to understand how the performance_tests is run please read the Docs section for [Setup](Setup.md).

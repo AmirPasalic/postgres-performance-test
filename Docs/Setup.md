@@ -33,12 +33,18 @@ The ppt_initialize command will create CarReservationsDb and seed test data to i
 After the setup and data seeding of the test database is done you will be able to view the summary of 
 the initialization command in form of text log file located at your "home directory" under:
 ~/PostgresPerformanceProject/DatabaseSetup/CarReservationsDbSetupSummary.txt
+This file contains details about the tables created and the data.
 2. Step: run the ppt_performance_test script in order to execute the queries against the test
 database and its tables.
-3. Step: The performance test results will be written to text file as output logs on your host machine.
-The location of the log file is in your home directory: ~/PostgresPerformanceProject/PerformanceTestResults/CarReservationsDbSetupSummary.txt
-This log file will contain all the information about the queries including the execution plans, planning 
-and execution time.
+3. Step: The performance test results will be written to multiple log files on your host machine.
+The location of the log files is in your home directory: ~/PostgresPerformanceProject/PerformanceTestResults
+There you will see: DatabaseInformationLog.txt, ExecutionLog.txt and a Log file for each query like Query1Log.txt
+and execution time. 
+- DatabaseInformationLog file contains information like: database size, table and index size and statistics.
+- ExecutionLog.txt is the log of the overall execution steps logged to a file.
+- Query1Log.txt, Query2Log.txt .. QueryNLog.txt will have information about the query including: the sql code,
+execution time without indexes, execution time with indexes applied. Using this you can compare how 
+was the execution for standard SQL based query compared to Document based(JSONB) query.
 
 **Note:**
 The database and all the performance tests run inside a docker container. Only the summary and performance

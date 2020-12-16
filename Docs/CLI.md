@@ -24,7 +24,9 @@ used, arguments which can be passed. The help page for each command can be viewe
 example: `ppt_initialize --help or ppt_initialize -h`
 
 #### Help
-TODO...
+
+The ppt_help command will display the help page of the ppt CLI. In the help page there will be a small
+summary about all available commands in the ppt CLI.
 
 #### Initialize
 
@@ -52,12 +54,19 @@ More info's on this command can be found in the help page of the ppt_cleanup.
 Example: `ppt_cleanup --help or ppt_cleanup -h`
 
 #### Open test results
-TODO...
+
+The ppt_open_test_results command is usually usefull to be run after the ppt_performance_test command. The 
+ppt_open_test_results command will open the location(using default files/directory explorer) of the log files where the test results are saved. This command is like a nice shortcut to save some time to view the result log files. These files
+are stored in your home directory in ~/PostgresPerformanceProject/PerformanceTestResults.
+
+More info's on this command can be found in the help page of the ppt_open_test_results.
+
+Example: `ppt_open_test_results --help or ppt_open_test_results -h`
 
 #### Performance test
 
 The ppt_performance_test script will run a set of queries on the CarReservationsDb. Prerequisit is of course that
-we have created the CarReservationsDb with the ppt_initialize.sh script.
+we have created the CarReservationsDb with the ppt_initialize command.
 
 Performance test can be run with some arguments like how many times the queries should be run, should the queries run
 also with applied indexes on the database.
@@ -70,14 +79,14 @@ Example: `ppt_performance_test --help or ppt_performance_test -h`
 
 The ppt_start_db script will start the docker container which hosts the CarReservationsDb which was created with the ppt_initialize command.
 
-More info's on this command can be found in the help page of the start_db.sh.
+More info's on this command can be found in the help page of the ppt_start_db.
 
 Example: `ppt_start_db --help or ppt_start_db -h`
 
 #### Stop Db
 
-The ppt_stop_db.sh script will stop the docker container which hosts the CarReservationsDb which was created with the ppt_initialize.sh command. In order to start it again you can use the ppt_start_db.sh script.
+The ppt_stop_db.sh script will stop the docker container which hosts the CarReservationsDb which was created with the ppt_initialize command. In order to start it again you can use the ppt_start_db command.
 
-More info's on this command can be found in the help page of the ppt_stop_db.sh
+More info's on this command can be found in the help page of the ppt_stop_db
 
 Example: `ppt_stop_db --help or ppt_stop_db -h`
