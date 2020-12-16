@@ -24,7 +24,6 @@ Here are some table examples:
 \
 \
 **Table: cars**
-&nbsp;
 
 Columns | id | brand | model | company_name | is_used 
 --- | --- | --- | --- |--- |--- |---
@@ -35,7 +34,6 @@ Columns | id | brand | model | company_name | is_used
 \
 \
 **Table: jsonb_cars**
-&nbsp;
 
 Columns | id | datas
 --- | --- | --- | --- 
