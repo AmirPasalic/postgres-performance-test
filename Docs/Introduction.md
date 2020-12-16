@@ -23,7 +23,7 @@ thy contain only 2 fileds: id and data(JSONB filed containing all the fileds of 
 Here are some table examples:
 \
 \
-**Table: cars**
+Table: cars
 
 Columns | id | brand | model | company_name | is_used 
 --- | --- | --- | --- |--- |--- |---
@@ -31,9 +31,10 @@ Columns | id | brand | model | company_name | is_used
 ... | 2 | VW | Passat | Volkswagen AG | true
 ... | 3 | Mercedes-Benz | GLE | Daimler AG | true
 ... | ... | ... | ... | ... | ...
+
 \
 \
-**Table: jsonb_cars**
+Table: jsonb_cars
 
 Columns | id | datas
 --- | --- | --- | --- 
@@ -41,6 +42,7 @@ Columns | id | datas
 ... | 2 | { "brand": "VW", "model": "Passat", "is_used": true, "company_name": "Volkswagen AG"} 
 ... | 3 | { "brand": "Mercedes-Benz", "model": "GLE", "is_used": true, "company_name": "Daimler AG"} 
 ... | ... | ... | ...
+
 \
 As you can see from the example the data which is stored in the cars and jsonb_cars is the same. It is
 just stored in a different way. For all the other tables the same pattern is used. 
