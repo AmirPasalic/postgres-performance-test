@@ -32,16 +32,20 @@ Table: cars
 |... | 3 | Mercedes-Benz | GLE | Daimler AG | true|
 |... | ... | ... | ... | ... | ...|
 
+
+Test
 \
 \
 Table: jsonb_cars
 
-|Columns | id | datas|
-|--- | --- | --- | ---|
-|... | 1 | { "brand": "BMW", "model": "X1", "is_used": true, "company_name": "Bayerische Motoren Werke AG"}|
-|... | 2 | { "brand": "VW", "model": "Passat", "is_used": true, "company_name": "Volkswagen AG"}|
-|... | 3 | { "brand": "Mercedes-Benz", "model": "GLE", "is_used": true, "company_name": "Daimler AG"}|
-|... | ... | ... | ...|
+| Columns | id | datas |
+| --- | --- | --- | --- |
+| ... | 1 | { "brand": "BMW", "model": "X1", "is_used": true, "company_name": "Bayerische Motoren Werke AG"} |
+| ... | 2 | { "brand": "VW", "model": "Passat", "is_used": true, "company_name": "Volkswagen AG"} |
+| ... | 3 | { "brand": "Mercedes-Benz", "model": "GLE", "is_used": true, "company_name": "Daimler AG"} |
+| ... | ... | ... | ... |
+
+Test
 
 \
 As you can see from the example the data which is stored in the cars and jsonb_cars is the same. It is
