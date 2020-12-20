@@ -12,15 +12,15 @@ function define_constants {
 function help {
     echo ""
     echo "NAME"
-    echo "$TAB cleanup.sh"
+    echo "$TAB ppt_cleanup"
     echo ""
     echo "DESCRIPTION"
-    echo "$TAB cleanup.sh command page"
+    echo "$TAB ppt_cleanup command page"
     echo "$TAB This command cleans up CarReservationsDb database (deletes the database and all its data)."    
     echo ""
     echo "$TAB You can create the test db database CarReservationsDb by running the initialize.sh command"
-    echo "$TAB More infos on that you can find by visiting the help page of the initialize.sh."
-    echo "$TAB Example: initialize.sh --help or initialize.sh -h"
+    echo "$TAB More infos on that you can find by visiting the help page of the ppt_initialize command."
+    echo "$TAB Example: ppt_initialize --help or ppt_initialize -h"
     echo ""
 }
 

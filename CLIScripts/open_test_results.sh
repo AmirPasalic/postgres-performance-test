@@ -14,18 +14,18 @@ function define_constants {
 function help {
     echo ""
     echo "NAME"
-    echo "$TAB open_test_results.sh"
+    echo "$TAB ppt_open_test_results"
     echo ""
     echo "DESCRIPTION"
-    echo "$TAB open_test_results.sh help page"
-    echo "$TAB This command creates a opens the test or execution results from performance-test.sh"
-    echo "$TAB For this command to work properly the performance-test.sh has to be execute before this."
+    echo "$TAB ppt_open_test_results help page"
+    echo "$TAB This command creates a opens the test or execution results from performance_test.sh"
+    echo "$TAB For this command to work properly the ppt_performance_test has to be execute before this."
     echo "$TAB Otherwise there will be no execution log files to show."
     echo ""
     echo "$TAB Options:"
     echo ""
     echo "$TAB -h, --help"
-    echo "$DOUBLE_TAB Will open the help page for open_test_results.sh help page"
+    echo "$DOUBLE_TAB Will open the help page for ppt_open_test_results help page"
     echo ""
 }
 
