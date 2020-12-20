@@ -2,13 +2,13 @@
 
 ## Project
 The goal of the project is to test how using a Document based(JSONB) schema affects query performance when
-compared to standard SQL schema. For this performance test we have some test queries written for
-a test database.
+compared to standard SQL schema. For this performance test we have a test database, with test data and 
+some test queries written for this database.
 
 ## Test Database
 The test database is called "CarReservationsDb". It is a very simplistic database and table design
 for the purpose to run some test queries. 
-The database contains in total 6 tables. The database contains following tables:
+The database contains in total 6 tables. These tables are:
 - cars
 - customers
 - car_reservations
@@ -16,9 +16,9 @@ The database contains in total 6 tables. The database contains following tables:
 - jsonb_customers
 - jsonb_car_reservations
 
-The tables cars, customers anc car_reservation are standard tables with each db column per field. The tables
-with the prefix name jsonb_* are tables which contain the same fileds as the ones without the jsonb_* but
-thy contain only 2 fileds: id and data(JSONB filed containing all the fileds of the table).
+The tables cars, customers and car_reservations are standard tables with each db column per field. The tables
+with the prefix name jsonb_* are tables which contain the same fields as the ones without the jsonb_* but
+thy contain only 2 columns: id and data(JSONB column containing all the fields of the entity).
 
 Here are some table examples:
 \
@@ -46,12 +46,13 @@ Table: jsonb_cars
 \
 As you can see from the example the data which is stored in the cars and jsonb_cars is the same. It is
 just stored in a different way. For all the other tables the same pattern is used. 
-The queries which will be run on the performance test will be aiming to get the same data.
+The queries which will be run on the performance test will be aiming to get the same data(regardless
+of the structure of how it is stored).
 
 ## Model
 The table mode is supposed to represent a small car reservations schema. The car_reservations table
-holds the information which cusomer did a car reservation, for which car, for which period is the reservation
-and at which time it was created. For this model we have 3 tables: cars, customers and car_reservations.
+holds the information which cusomer made a car reservation, for which car, for which period is the reservation
+and at which time it was created. For this model we have 3 standard sql schema tables: cars, customers and car_reservations and 3 document/jsonb based tables: jsonb_cars, jsonb_customers and jsonb_car_reservations.
 
 ## Disclaimer
 In order to see the Disclaimer for the test data please view section [Disclaimer](../DISCLAIMER.md)
