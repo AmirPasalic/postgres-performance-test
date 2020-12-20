@@ -25,7 +25,7 @@ function help {
     echo "$TAB Options:"
     echo ""
     echo "$TAB -h, --help"
-    echo "$DOUBLE_TAB Will open the help page for open_test_results.sh help page"
+    echo "$DOUBLE_TAB Will open the help page for ppt_open_test_results help page"
     echo ""
 }
 

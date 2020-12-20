@@ -22,7 +22,7 @@ function help {
     echo "$TAB Id as uuid and data as JOSNB."
     echo ""
     echo "$TAB This database with its tables and data is used for running the performance test."
-    echo "$TAB More infos on that you can find by visiting the help page of the performance_test.sh."
+    echo "$TAB More infos on that you can find by visiting the help page of the performance_test command."
     echo "$TAB Example ppt_performance_test --help or ppt_performance_test -h"
     echo ""
     echo "$TAB This database can be removed with all its data with the ppt_cleanup command."

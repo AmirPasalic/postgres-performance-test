@@ -21,7 +21,7 @@ function help {
     echo "$TAB You can stop the Postgresql docker container where CarReservationsDb is running with the ppt_stop_db command"
     echo "$TAB More infos on that you can find by visiting the help page of the ppt_stop_db command."
     echo "$TAB Example: ppt_stop_db --help or ppt_stop_db -h"
-    echo "$TAB Also check the ppt_initialize.sh command by running the help page of the ppt_initialize"
+    echo "$TAB Also check the ppt_initialize command by running the help page of the ppt_initialize"
     echo "$TAB Example: ppt_initialize --help or ppt_initialize -h"
     echo ""
 }
