@@ -30,9 +30,11 @@ Documentation:
 - [Setup](Docs/Setup.md)
 - [CLI](Docs/CLI.md)
 - [Disclaimer](DISCLAIMER.md)
-- Labs
-    - [Lab1](Lab1.md)
-    - [Lab2](Lab2.md)
+- [Labs](Labs/README.md)
+    - [Lab1](Labs/Lab1.md)
+    - [Lab2](Labs/Lab2.md)
+    - [Lab3](Labs/Lab3.md)
+    - [Lab4](Labs/Lab4.md)
 
 \
 In order to continue and run the project please read the Docs section above starting from [Introduction](Docs/Introduction.md) and the section for [Setup](Docs/Setup.md) and [CLI](Docs/CLI.md). After you have read these you 
