@@ -9,7 +9,6 @@ multiple times the results will be affected. As the data on which we run the tes
 results should be affected.
 
 ## Lab commands
-
 Run the commands in following order:
 
 - `ppt_cleanup` to cleanup the env from previous run 
@@ -19,4 +18,7 @@ Run the commands in following order:
 - view the Log files opened in the Directory/Files explorer
 
 # Lab results
-Summary of observed results.......
+Conclusion after reviewing Log files of the query test runs:
+- note 1
+- note 2
+- note 3

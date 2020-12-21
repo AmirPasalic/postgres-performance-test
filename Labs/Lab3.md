@@ -9,7 +9,6 @@ multiple times the results will be affected. As the data on which we run the tes
 results should be affected.
 
 ## Lab commands
-
 Run the commands in following order:
 
 - `ppt_cleanup` to cleanup the env from previous run 

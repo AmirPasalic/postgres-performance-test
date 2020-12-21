@@ -1,4 +1,3 @@
-
 # Lab 2 - Run with 10 000 records
 
 ## Lab summary
