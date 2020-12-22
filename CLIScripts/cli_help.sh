@@ -59,7 +59,7 @@ function help {
     echo "$TAB should be run, should the queries run"
     echo "$TAB also with applied indexes on the database."
     echo "$TAB More info's on this command can be found in the help page of the performance_test.sh"
-    echo "$TAB Example: performance_test.sh --help or performance_test.sh -h"
+    echo "$TAB Example: ppt_performance_test --help or ppt_performance_test -h"
     echo ""
     echo "ppt_start_db"
     echo "$TAB This command will start the docker container which hosts the" 

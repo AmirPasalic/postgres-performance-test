@@ -1,7 +1,7 @@
 # Lab 1 - Run with default 1000 records
 
 ## Lab summary
-The goal of this lab is to setup the db with certin amount of entries. By default
+The goal of this lab is to setup the db with certain amount of entries. By default
 if not specified differently 1000x(factor) entries will be created. The test queries
 will run on the database with Indexes included. The queries will first run without indexes 
 and then after indexes are applied again. This way you will be able to analyze the results
@@ -22,6 +22,9 @@ Conclusion after reviewing Log files of the query test runs:
 - Executing the queries without indexes in most cases(for these examples) is slower then 
 with indexes appied. The only exception to this are queries which contain JOINS between 2 and 
 more tables.
+
+- Executing the queries without indexes applied for most queries runs are much faster for 
+Standard SQL schema.
 
 - Seems that executing the same queries multiple times does not affect the speed 
 of execution time tremendously. The differences are very small.

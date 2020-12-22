@@ -1,6 +1,6 @@
 # Performance tests
 Performance test which is executed with the ppt CLI command `ppt_performance_test` is a custom 
-designed test particulary designed for this project and the examples used in it. In the project test database
+designed test particularly designed for this project and the examples used in it. In the project test database
 "CarReservationsDb" we have following tables:
 - cars
 - customers
@@ -42,7 +42,7 @@ execution results from the Postgresql EXPLAIN ANALYZE command and log it to a lo
 If you specify the -wi argument like `ppt_performance_test -wi` the queries will be rune once before the indexes
 are applied and once after the indexes are applied so you will be able to see the difference in the query performance if they use an index.
 If you specify the -c argument the queries will run 'c' number of times like: `ppt_performance_test -c 5`. In
-this cae each query will run 5 times. For each query run the results will be logged to the corresponding log file
+this case each query will run 5 times. For each query run the results will be logged to the corresponding log file
 as described above.
 
 ### Results

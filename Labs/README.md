@@ -1,19 +1,19 @@
 # Labs
 
 The Labs serve as a example how you can use and run the code of this project. By looking and trying Labs 
-out you can have a breef idea how the CLI commands and this project are supposed to be used. 
+out you can have a brief idea how the CLI commands and this project are supposed to be used. 
 The Labs show a way how the CLI are used and how you can run tests runs(the specified queries) to 
 view the query results of the and see the performance tests.
 
 **Note:**
 The results from the labs can produce different results depending on the host machine where they are running, 
-how often they run, usage of resources(CPU and memeory) on the host machine and the time of running.
-This means that performance speed and results can be different on different machienes under different
+how often they run, usage of resources(CPU and memory) on the host machine and the time of running.
+This means that performance speed and results can be different on different machines under different
 conditions.
 
 ## Number of entries x factor
 When running the `ppt_initialize` command you can specifiy an argument recordNumber. This means that
-you can specify the number of records of test data inserted into tables. To be more prcise the number of records
+you can specify the number of records of test data inserted into tables. To be more precise the number of records
 is not the same for every table it is more like a factor number. For example if the recordNumber is 1000 then
 number of entries in the car table is 3 x recordNumber which is 3000. For customer table the number of entries would be 2 x recordNumber which is 2000. For car_reservations table the number of entries would be 12 x recordNumber which is 12000. These number are not so important as they are done to support some
 test data and seeding logic for CarReservationsDb. Considering default recordNumber is 1000 and 
@@ -27,7 +27,7 @@ following number of records:
 - customers 2000
 - jsonb_customers 2000
 
-If argument recordNumber is for example 10 000 then tables will have following nmumbers of records per
+If argument recordNumber is for example 10 000 then tables will have following numbers of records per
 table:
 
 - car_reservations 120000
@@ -37,7 +37,7 @@ table:
 - customers 20000
 - jsonb_customers 20000
 
-## Recomendation
+## Recommendation
 Run the labs yourself and analyze the logs/results to see if the findings and results match the once made 
 by me.
 
