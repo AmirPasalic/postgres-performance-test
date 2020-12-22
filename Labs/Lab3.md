@@ -27,11 +27,9 @@ more tables.
 - Seems that executing the same queries multiple times does not affect the speed 
 of execution time tremendously. The differences are very small.
 
-- Running the performance_test command multiple times does not affect the execution time.
-The results are very similar regardless of how many times you run the test.
-
 - Number of records or recordNumber of 100 000 does affect the execution time on the
 tables which have JSONB/Document schema much more then the tables with standard SQL schema.
+This is especially the case when indexes are not used.
 
 - The biggest difference in execution time speed is as for all labs the queries which use '=' operator
 on the JSONB first level field when an 'BTree Expression Index' is applied like the index

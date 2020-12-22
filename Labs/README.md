@@ -2,21 +2,22 @@
 
 The Labs serve as a example how you can use and run the code of this project. By looking and trying Labs 
 out you can have a brief idea how the CLI commands and this project are supposed to be used. 
-The Labs show a way how the CLI are used and how you can run tests runs(the specified queries) to 
-view the query results of the and see the performance tests.
+The Labs show a way how the CLI commands are used and how you can run tests runs(the specified queries) to 
+view the query results and see the performance tests.
 
 **Note:**
 The results from the labs can produce different results depending on the host machine where they are running, 
-how often they run, usage of resources(CPU and memory) on the host machine and the time of running.
+how often they run, usage of resources(CPU and memory on other processes) on the host machine 
+and the time of running.
 This means that performance speed and results can be different on different machines under different
 conditions.
 
 ## Number of entries x factor
 When running the `ppt_initialize` command you can specifiy an argument recordNumber. This means that
 you can specify the number of records of test data inserted into tables. To be more precise the number of records
-is not the same for every table it is more like a factor number. For example if the recordNumber is 1000 then
+is not the same for every table, it is more like a factor number. For example if the recordNumber is 1000 then
 number of entries in the car table is 3 x recordNumber which is 3000. For customer table the number of entries would be 2 x recordNumber which is 2000. For car_reservations table the number of entries would be 12 x recordNumber which is 12000. These number are not so important as they are done to support some
-test data and seeding logic for CarReservationsDb. Considering default recordNumber is 1000 and 
+test data and seeding logic for "CarReservationsDb". Considering default recordNumber is 1000 and 
 if the argument is not specified 1000 factor is going to be used. In this case the tables will have 
 following number of records:
 

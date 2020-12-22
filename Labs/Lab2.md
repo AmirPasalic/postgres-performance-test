@@ -17,6 +17,7 @@ Run the commands in following order:
 - `ppt_initialize -rn 10000` to initialize the env and the database: 
 - `ppt_performance_test -counter 2 -withIndex`
 - `ppt_open_test_results` to open and see the test results
+- view the Log files opened in the Directory/Files explorer
 - then rerun the tests on same data again to see if the second run has different results
 - `ppt_performance_test -counter 2 -withIndex`
 - `ppt_open_test_results` to open and see the test results for each query and other information

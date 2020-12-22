@@ -1,7 +1,7 @@
 # Lab 4 - Run with 1 000 000 records
 
 ## Lab summary
-The goal of this lab is to setup the db with 100 000x(hundred thousand factor) entries and run the test queries
+The goal of this lab is to setup the db with 1 000 000x(1 milion factor) entries and run the test queries
 2 times on the database with Indexes included. The queries will first run without indexes 
 2 times and then after indexes are applied again 2 times. This way you will be able to analyze the results
 and compare query performance with and without usage of indexes and to see if by running same query
@@ -10,7 +10,7 @@ results should be affected.
 
 **Note**
 This lab with the recordNumber 1 000 000 could take a while to setup and run. It could also be resource intensive
-on the host machine. For my example it took me 5-10 minutes to setup and run the tests.
+on the host machine. For my example it took me 10-15 minutes to setup and run the tests and the database size was over 6GB.
 
 ## Lab commands
 Run the commands in following order:
@@ -24,6 +24,10 @@ Run the commands in following order:
 # Lab results observations
 Conclusion after reviewing Log files of the query test runs:
 
+- Setup takes 5-10 minutes
+
+- Performance test execution takes 10-15minutes overall
+
 - Executing the queries without indexes in most cases(for these examples) is slower then 
 with indexes applied. The only exception to this are queries which contain JOINS between 2 and 
 more tables.
@@ -36,7 +40,7 @@ tables which have JSONB/Document schema much more then the tables with standard 
 
 - The biggest difference in execution time speed is as for all labs the queries which use '=' operator
 on the JSONB first level field when an 'BTree Expression Index' is applied like the index
-jsonb_cars_brand_index. In this case the JSONB query is x10 times faster then the standard SQL query
+jsonb_cars_brand_index. In this case the JSONB query is x20 times faster then the standard SQL query
 altogh they both have BTree indexes on the same filed. Seems like the BTree expression index on JSONB
 column is much faster then the standard BTree index on standard SQL column. This gets event 
 more significant boost with the index as the number of data increases.

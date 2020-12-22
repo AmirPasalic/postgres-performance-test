@@ -3,14 +3,14 @@
 ## Lab summary
 The goal of this lab is to setup the db with certain amount of entries. By default
 if not specified differently 1000x(factor) entries will be created. The test queries
-will run on the database with Indexes included. The queries will first run without indexes 
+will run on the database with indexes included. The queries will first run without indexes 
 and then after indexes are applied again. This way you will be able to analyze the results
 and compare query performance with and without usage of indexes.
 ## Lab commands
 Run the commands in following order:
 
 - `ppt_cleanup` to cleanup the env from previous run. No need to run this command if no env has been created before. 
-- `ppt_initialize` to initialize the env and the database: 
+- `ppt_initialize` to initialize the env and the database.
 - `ppt_performance_test -withIndex` to run the performance test(queries) with applied indexes.
 - `ppt_open_test_results` to open and see the test results for each query and other information
 regarding tables, indexes and statistics.
@@ -26,11 +26,8 @@ more tables.
 - Executing the queries without indexes applied for most queries runs are much faster for 
 Standard SQL schema.
 
-- Seems that executing the same queries multiple times does not affect the speed 
-of execution time tremendously. The differences are very small.
-
 - Number of records or recordNumber of 1000 is very small so the performance implication can not be
-seen compared to the situation where the recordNumber is much higher. Regardless of that the affect and
+seen compared to the situation where the recordNumber is much higher. Regardless of that
 the differences between Standard SQL and JOSNB/Document queries are visible.
 
 - The biggest difference in execution time speed is as for all labs the queries which use '=' operator
