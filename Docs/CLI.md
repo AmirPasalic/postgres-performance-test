@@ -18,10 +18,10 @@ The following commands exist in the project:
 - ppt_help
 - ppt_initialize
 - ppt_cleanup
+- ppt_performance_test
 - ppt_open_test_results
-- ppt_performance_test 
 - ppt_start_db
-- ppt_stop_db.sh
+- ppt_stop_db
 
 Each command has an help page with some information about the command like how it can be 
 used and arguments which can be passed to it. The help page for each command can be viewed by typing for 
@@ -56,16 +56,6 @@ More info's on this command can be found in the help page of the ppt_cleanup.
 
 Example: `ppt_cleanup --help or ppt_cleanup -h`
 
-#### Open test results
-
-The ppt_open_test_results command is usually useful to be run after the ppt_performance_test command. The 
-ppt_open_test_results command will open the location(using default files/directory explorer) of the log files where the test results are saved. This command is like a nice shortcut to save some time to view the result log files. These files
-are stored in your home directory in ~/PostgresPerformanceProject/PerformanceTestResults.
-
-More info's on this command can be found in the help page of the ppt_open_test_results.
-
-Example: `ppt_open_test_results --help or ppt_open_test_results -h`
-
 #### Performance test
 
 The ppt_performance_test script will run a set of queries on the CarReservationsDb. Prerequisite is that
@@ -77,6 +67,19 @@ also with applied indexes on the database.
 More info's on this command can be found in the help page of the ppt_performance_test
 
 Example: `ppt_performance_test --help or ppt_performance_test -h`
+
+\
+To understand how the performance test works please read the Docs section for [Performance tests](PerformanceTest.md).
+
+#### Open test results
+
+The ppt_open_test_results command is usually useful to be run after the ppt_performance_test command. The 
+ppt_open_test_results command will open the location(using default files/directory explorer) of the log files where the test results are saved. This command is like a nice shortcut to save some time to view the result log files. These files
+are stored in your home directory in ~/PostgresPerformanceProject/PerformanceTestResults.
+
+More info's on this command can be found in the help page of the ppt_open_test_results.
+
+Example: `ppt_open_test_results --help or ppt_open_test_results -h`
 
 #### Start Db
 
