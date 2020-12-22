@@ -21,7 +21,7 @@ and try things out.*
 
 ## Where to start?
 The documentation(Docs) related to this project have all the details and examples in order to 
-understand the Model and examples, setup the test db and run some test runs or 'Labs'
+understand the Model and example tests, setup the test db and run some test runs or 'Labs'
 to see the results. Below is a list of all Docs related to this projects. Reading and following
 those will give you a good overview how to setup, run the performance test and analyze results.
 \
@@ -29,6 +29,7 @@ Documentation:
 - [Introduction](Docs/Introduction.md)
 - [Setup](Docs/Setup.md)
 - [CLI](Docs/CLI.md)
+- [Performance tests](Docs/PerformanceTest.md)
 - [Disclaimer](DISCLAIMER.md)
 - [Labs](Labs/README.md)
     - [Lab1](Labs/Lab1.md)
@@ -37,5 +38,5 @@ Documentation:
     - [Lab4](Labs/Lab4.md)
 
 \
-In order to continue and run the project please read the Docs section above starting from [Introduction](Docs/Introduction.md) and the section for [Setup](Docs/Setup.md) and [CLI](Docs/CLI.md). After you have read these you 
-can have a look at the Labs. The Labs serve as a example test run for this project.
+In order to continue and run the project please read the Docs section above starting from [Introduction](Docs/Introduction.md) and the sections for [Setup](Docs/Setup.md), [CLI](Docs/CLI.md) and [Performance tests](PerformanceTest.md). After you have read these you can have a look at the [Labs](Labs/README.md). 
+The Labs serve as a example how to run the performance tests and view the results.

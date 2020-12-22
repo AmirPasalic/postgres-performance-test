@@ -37,6 +37,10 @@ table:
 - customers 20000
 - jsonb_customers 20000
 
+## Recomendation
+Run the labs yourself and analyze the logs/results to see if the findings and results match the once made 
+by me.
+
 ## Labs
 Labs:
 - [Lab1](Lab1.md) - Run with default 1000 records
